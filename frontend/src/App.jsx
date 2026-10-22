@@ -1,20 +1,3 @@
-/**
- * App.jsx
- * --------
- * Root component. Owns API state and renders the full dashboard.
- *
- * Layout:
- *   Header
- *   IdeaForm            ← user input
- *   (error banner)
- *   ── results (only shown after a successful API response) ──
- *   ScoreCards          ← ML score + Idea Clarity score (separate)
- *   DimensionBreakdown  ← five idea-evaluation dimensions
- *   NarrativeSection    ← strengths / gaps / suggestions
- *   MLDetails           ← extracted features, country, categories
- *   Limitations         ← collapsible disclosures
- *   Footer
- */
 import { useState } from 'react'
 import { validateIdea } from './api'
 import IdeaForm          from './components/IdeaForm'
@@ -36,10 +19,9 @@ export default function App() {
     try {
       const data = await validateIdea(idea, country)
       setReport(data)
-      // Scroll results into view on mobile
       setTimeout(() => {
-        document.getElementById('results-top')?.scrollIntoView({ behavior: 'smooth' })
-      }, 100)
+        document.getElementById('results-top')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }, 120)
     } catch (err) {
       setError(err.message)
     } finally {
@@ -48,73 +30,81 @@ export default function App() {
   }
 
   return (
-    <>
-      {/* ── Header ─────────────────────────────────────────── */}
-      <header className="site-header">
-        <div className="container">
-          <span style={{ fontSize: '1.5rem' }} aria-hidden="true">🚀</span>
-          <div>
-            <h1>AI Startup Validator</h1>
-            <p className="tagline">
-              Historical pattern analysis · Not a guarantee of success
-            </p>
-          </div>
+    <div className="page-wrapper">
+      {/* ── Navbar ─────────────────────────────────────── */}
+      <nav className="navbar" aria-label="Site navigation">
+        <div className="navbar__inner">
+          <a href="/" className="navbar__brand">
+            <div className="navbar__icon" aria-hidden="true">🚀</div>
+            <span className="navbar__name">StartupValidator</span>
+          </a>
+          <span className="navbar__badge">AI-Powered · Academic</span>
         </div>
-      </header>
+      </nav>
 
-      {/* ── Main content ───────────────────────────────────── */}
-      <main className="container" style={{ paddingBottom: '2rem' }}>
+      {/* ── Hero ───────────────────────────────────────── */}
+      <section className="hero" aria-labelledby="hero-title">
+        <div className="hero__eyebrow">
+          <span aria-hidden="true">⚡</span> ML + Rule-Based Analysis
+        </div>
+        <h1 id="hero-title" className="hero__title">
+          Validate Your<br /><span>Startup Idea</span><br />in Seconds
+        </h1>
+        <p className="hero__sub">
+          Combines a Random Forest model trained on 13,334 historical startups
+          with a structured idea-clarity evaluator to give you a data-grounded
+          assessment — not a guarantee.
+        </p>
+      </section>
 
+      {/* ── Main ───────────────────────────────────────── */}
+      <main className="container" style={{ paddingBottom: '3rem', flex: 1 }}>
         <IdeaForm onSubmit={handleSubmit} loading={loading} />
 
-        {/* Error state */}
         {error && (
           <div className="error-banner" role="alert">
-            <strong>Error: </strong>{error}
+            <span aria-hidden="true">⚠</span>
+            <span><strong>Error: </strong>{error}</span>
           </div>
         )}
 
-        {/* Results */}
         {report && (
-          <div id="results-top">
+          <div id="results-top" className="results-appear">
 
-            {/* ── Score overview ─── */}
-            <div className="card" style={{ marginTop: '1.5rem' }}>
-              <h2>Validation result</h2>
+            {/* Scores */}
+            <div className="card card--highlight" style={{ marginTop: '1.75rem' }}>
+              <div className="card__title">Validation Result</div>
               <ScoreCards
                 mlResult={report.ml_result}
                 ideaEvaluation={report.idea_evaluation}
               />
             </div>
 
-            {/* ── Idea evaluation dimensions ─── */}
+            {/* Dimensions */}
             <div className="card">
-              <h2>Idea evaluation — dimension breakdown</h2>
-              <p style={{ fontSize: '0.82rem', color: '#64748b', marginBottom: '1rem' }}>
+              <div className="card__title">Idea Clarity — Dimension Breakdown</div>
+              <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginBottom: '1.1rem' }}>
                 {report.idea_evaluation.note}
               </p>
               <DimensionBreakdown dimensions={report.idea_evaluation.dimensions} />
             </div>
 
-            {/* ── Strengths / gaps / suggestions ─── */}
+            {/* Narrative */}
             <div className="card">
-              <h2>Narrative assessment</h2>
+              <div className="card__title">Narrative Assessment</div>
               <NarrativeSection narrative={report.narrative} />
             </div>
 
-            {/* ── ML model details ─── */}
+            {/* ML Details */}
             <div className="card">
-              <h2>ML model details</h2>
-              <p style={{ fontSize: '0.82rem', color: '#64748b', marginBottom: '1rem' }}>
-                Source: {report.ml_result.source}
+              <div className="card__title">ML Model Details</div>
+              <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginBottom: '0.9rem' }}>
+                {report.ml_result.source}
               </p>
-              <MLDetails
-                submission={report.submission}
-                mlResult={report.ml_result}
-              />
+              <MLDetails submission={report.submission} mlResult={report.ml_result} />
             </div>
 
-            {/* ── Limitations ─── */}
+            {/* Limitations */}
             <div className="card">
               <Limitations limitations={report.limitations} />
             </div>
@@ -123,16 +113,14 @@ export default function App() {
         )}
       </main>
 
-      {/* ── Footer ─────────────────────────────────────────── */}
+      {/* ── Footer ─────────────────────────────────────── */}
       <footer className="site-footer">
         <p>
-          For academic purposes only · Does not constitute investment or business advice
-        </p>
-        <p style={{ marginTop: '0.25rem' }}>
-          ML model trained on Crunchbase data ~1990–2016 ·{' '}
-          <strong>Not a probability of success</strong>
+          Academic project only · Not investment advice ·
+          ML model trained on Crunchbase data ~1990–2016 ·
+          <strong style={{ color: 'var(--text-secondary)' }}> Not a probability of success</strong>
         </p>
       </footer>
-    </>
+    </div>
   )
 }

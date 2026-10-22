@@ -1,7 +1,3 @@
-/**
- * IdeaForm.jsx
- * The input form: idea textarea + country input + submit button.
- */
 import { useState } from 'react'
 
 const COUNTRIES = [
@@ -17,6 +13,7 @@ export default function IdeaForm({ onSubmit, loading }) {
   const [custom,  setCustom]  = useState('')
 
   const effectiveCountry = country === 'Other' ? custom : country
+  const wordCount = idea.trim().split(/\s+/).filter(Boolean).length
   const canSubmit = idea.trim().length > 0 && effectiveCountry.trim().length > 0
 
   function handleSubmit(e) {
@@ -25,31 +22,37 @@ export default function IdeaForm({ onSubmit, loading }) {
     onSubmit(idea.trim(), effectiveCountry.trim())
   }
 
+  const wordColor = wordCount === 0
+    ? 'var(--text-muted)'
+    : wordCount < 20
+    ? 'var(--amber-400)'
+    : 'var(--green-400)'
+
   return (
     <form className="card" onSubmit={handleSubmit} noValidate>
-      <h2>Describe your startup idea</h2>
+      <div className="card__title">Describe Your Startup Idea</div>
 
-      <div className="field" style={{ marginBottom: '1rem' }}>
+      <div className="field" style={{ marginBottom: '1.1rem' }}>
         <label htmlFor="idea">
-          Startup idea <span style={{ color: '#dc2626' }}>*</span>
+          Startup idea description <span style={{ color: 'var(--red-400)' }}>*</span>
         </label>
         <textarea
           id="idea"
-          placeholder="e.g. An AI-powered platform that helps small restaurants predict daily demand to reduce food waste. Target customers are independent restaurant owners in India."
+          placeholder="e.g. An AI-powered platform that helps small restaurant owners predict daily demand to reduce food waste. Target customers are independent restaurant owners in India who struggle with over-ordering and spoilage costs."
           value={idea}
           onChange={e => setIdea(e.target.value)}
           disabled={loading}
           aria-required="true"
         />
-        <span style={{ fontSize: '0.78rem', color: '#64748b' }}>
-          {idea.trim().split(/\s+/).filter(Boolean).length} words — aim for 40–80 for best results
+        <span className="field-hint" style={{ color: wordColor }}>
+          {wordCount} words — aim for 40–80 for best results
         </span>
       </div>
 
-      <div className="field-row" style={{ marginBottom: '1.25rem' }}>
+      <div className="field-row" style={{ marginBottom: '1.4rem' }}>
         <div className="field">
           <label htmlFor="country">
-            Country <span style={{ color: '#dc2626' }}>*</span>
+            Country <span style={{ color: 'var(--red-400)' }}>*</span>
           </label>
           <select
             id="country"
@@ -87,9 +90,9 @@ export default function IdeaForm({ onSubmit, loading }) {
         aria-busy={loading}
       >
         {loading ? (
-          <><span className="spinner" aria-hidden="true" /> Analysing…</>
+          <><span className="spinner" aria-hidden="true" /> Analysing idea…</>
         ) : (
-          'Validate idea'
+          <><span aria-hidden="true">✦</span> Analyse Startup Idea</>
         )}
       </button>
     </form>

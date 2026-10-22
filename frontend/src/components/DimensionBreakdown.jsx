@@ -1,8 +1,3 @@
-/**
- * DimensionBreakdown.jsx
- * Shows all five idea-evaluation dimension scores as labelled progress bars
- * with brief explanations.
- */
 export default function DimensionBreakdown({ dimensions }) {
   return (
     <div>
@@ -13,11 +8,11 @@ export default function DimensionBreakdown({ dimensions }) {
   )
 }
 
-function barColor(score) {
-  if (score >= 8) return '#16a34a'
-  if (score >= 6) return '#2563eb'
-  if (score >= 4) return '#d97706'
-  return '#dc2626'
+function barGradient(score) {
+  if (score >= 8) return 'linear-gradient(90deg,#22c55e,#4ade80)'
+  if (score >= 6) return 'linear-gradient(90deg,#3b82f6,#60a5fa)'
+  if (score >= 4) return 'linear-gradient(90deg,#d97706,#fbbf24)'
+  return 'linear-gradient(90deg,#dc2626,#f87171)'
 }
 
 function DimensionRow({ dim }) {
@@ -28,12 +23,10 @@ function DimensionRow({ dim }) {
         <span className="dim-name">
           {dim.name}
           <span style={{
-            marginLeft: '0.4rem',
-            fontSize: '0.72rem',
-            color: '#94a3b8',
-            fontWeight: 400,
+            marginLeft: '0.4rem', fontSize: '0.68rem',
+            color: 'var(--text-muted)', fontWeight: 400,
           }}>
-            {dim.weight_pct}% weight
+            {dim.weight_pct}%
           </span>
         </span>
         <span className="dim-score">{dim.score}/{dim.max_score}</span>
@@ -41,7 +34,7 @@ function DimensionRow({ dim }) {
       <div className="progress-track">
         <div
           className="progress-fill"
-          style={{ width: `${pct}%`, background: barColor(dim.score) }}
+          style={{ width: `${pct}%`, background: barGradient(dim.score) }}
           role="progressbar"
           aria-valuenow={dim.score}
           aria-valuemin={0}

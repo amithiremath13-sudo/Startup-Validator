@@ -1,9 +1,3 @@
-/**
- * Limitations.jsx
- * Collapsible section showing the six model and pipeline limitations
- * from the API response. Always disclosed — never hidden by default
- * in a way that prevents users from seeing them.
- */
 import { useState } from 'react'
 
 export default function Limitations({ limitations }) {
@@ -17,7 +11,7 @@ export default function Limitations({ limitations }) {
         aria-expanded={open}
       >
         <span>{open ? '▲' : '▼'}</span>
-        {open ? 'Hide' : 'Show'} model limitations & disclosures ({limitations.length})
+        {open ? 'Hide' : 'Show'} model limitations &amp; disclosures ({limitations.length})
       </button>
 
       {open && (
