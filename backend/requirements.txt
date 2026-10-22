@@ -1,0 +1,15 @@
+# AI Startup Validator — Backend dependencies
+# Install with: pip install -r requirements.txt
+
+# Core ML / data
+pandas==3.0.6
+numpy==2.5.3
+scikit-learn==1.9.1
+joblib==1.5.0
+
+# API framework
+fastapi==0.115.12
+uvicorn[standard]==0.34.3
+
+# Test-time HTTP client (FastAPI TestClient)
+httpx==0.28.1

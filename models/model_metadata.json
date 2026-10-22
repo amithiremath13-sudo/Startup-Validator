@@ -1,0 +1,252 @@
+{
+  "phase": "Phase 3 \u2014 Model Training",
+  "spec_reference": "ML_METHODOLOGY.md Section 11",
+  "random_seed": 42,
+  "cv_folds": 5,
+  "feature_count": 65,
+  "feature_names": [
+    "is_sf_bay_area",
+    "is_california",
+    "country_USA",
+    "country_Unknown",
+    "country_GBR",
+    "country_CAN",
+    "country_ISR",
+    "country_DEU",
+    "country_FRA",
+    "country_RUS",
+    "country_CHN",
+    "country_IND",
+    "country_other",
+    "cat_Software",
+    "cat_Biotechnology",
+    "cat_Mobile",
+    "cat_Unknown",
+    "cat_Curated_Web",
+    "cat_E-Commerce",
+    "cat_Social_Media",
+    "cat_Advertising",
+    "cat_Enterprise_Software",
+    "cat_Games",
+    "cat_Health_Care",
+    "cat_Services",
+    "cat_Internet",
+    "cat_Finance",
+    "cat_Technology",
+    "cat_Analytics",
+    "cat_Hardware_plus_Software",
+    "cat_Security",
+    "cat_Clean_Technology",
+    "cat_Apps",
+    "cat_Semiconductors",
+    "cat_SaaS",
+    "cat_Health_and_Wellness",
+    "cat_Web_Hosting",
+    "cat_Networking",
+    "cat_Video",
+    "cat_Social_Network_Media",
+    "cat_Search",
+    "cat_Manufacturing",
+    "cat_Music",
+    "cat_Education",
+    "cat_Messaging",
+    "cat_Cloud_Computing",
+    "cat_Medical",
+    "cat_News",
+    "cat_Travel",
+    "cat_Information_Technology",
+    "cat_Web_Development",
+    "cat_Telecommunications",
+    "cat_Business_Services",
+    "cat_Media",
+    "cat_Sales_and_Marketing",
+    "cat_Entertainment",
+    "cat_iPhone",
+    "cat_Design",
+    "cat_Fashion",
+    "cat_Consulting",
+    "cat_Marketplaces",
+    "cat_Android",
+    "cat_FinTech",
+    "category_other",
+    "n_categories"
+  ],
+  "expected_feature_count": 65,
+  "prediction_point": "Day 0 \u2014 pre-funding idea stage",
+  "target_definition": {
+    "1": "SUCCESS (acquired or ipo)",
+    "0": "FAILURE (closed)"
+  },
+  "selected_model_name": "Random Forest",
+  "selected_model_file": "best_model.joblib",
+  "selection_criterion": "highest CV ROC-AUC (training data only); tie-breaker: CV F1",
+  "selection_used_test_set": false,
+  "baseline_accuracy": 0.532058492688414,
+  "test_results": {
+    "Logistic Regression": {
+      "accuracy": 0.6944131983502062,
+      "precision": 0.6892230576441103,
+      "recall": 0.7751937984496124,
+      "f1": 0.7296849087893864,
+      "roc_auc": 0.7557521209410745,
+      "confusion_matrix": [
+        [
+          752,
+          496
+        ],
+        [
+          319,
+          1100
+        ]
+      ]
+    },
+    "Decision Tree": {
+      "accuracy": 0.6835395575553056,
+      "precision": 0.6704208654416123,
+      "recall": 0.7970401691331924,
+      "f1": 0.7282678686413393,
+      "roc_auc": 0.7409631308613867,
+      "confusion_matrix": [
+        [
+          692,
+          556
+        ],
+        [
+          288,
+          1131
+        ]
+      ]
+    },
+    "Random Forest": {
+      "accuracy": 0.693663292088489,
+      "precision": 0.6768507638072856,
+      "recall": 0.8118393234672304,
+      "f1": 0.7382249279077219,
+      "roc_auc": 0.7598985720351998,
+      "confusion_matrix": [
+        [
+          698,
+          550
+        ],
+        [
+          267,
+          1152
+        ]
+      ]
+    },
+    "Gradient Boosting": {
+      "accuracy": 0.6962879640044994,
+      "precision": 0.6737022247575585,
+      "recall": 0.8322762508809021,
+      "f1": 0.744640605296343,
+      "roc_auc": 0.7587491642724201,
+      "confusion_matrix": [
+        [
+          676,
+          572
+        ],
+        [
+          238,
+          1181
+        ]
+      ]
+    },
+    "Extra Trees": {
+      "accuracy": 0.703037120359955,
+      "precision": 0.6813186813186813,
+      "recall": 0.8301620859760395,
+      "f1": 0.7484116899618806,
+      "roc_auc": 0.760087740102275,
+      "confusion_matrix": [
+        [
+          697,
+          551
+        ],
+        [
+          241,
+          1178
+        ]
+      ]
+    }
+  },
+  "cv_results": {
+    "Logistic Regression": {
+      "cv_accuracy_mean": 0.674978810682843,
+      "cv_accuracy_std": 0.009608479196414058,
+      "cv_f1_mean": 0.714104939709823,
+      "cv_f1_std": 0.006003128183110347,
+      "cv_auc_mean": 0.736393091994624,
+      "cv_auc_std": 0.005966662450000651,
+      "best_params": {
+        "C": 0.1,
+        "penalty": "l2"
+      }
+    },
+    "Decision Tree": {
+      "cv_accuracy_mean": 0.6646668960253718,
+      "cv_accuracy_std": 0.0036465871257070227,
+      "cv_f1_mean": 0.7134965197783008,
+      "cv_f1_std": 0.004598489325393843,
+      "cv_auc_mean": 0.7187909711431301,
+      "cv_auc_std": 0.003492913944407969,
+      "best_params": {
+        "max_depth": 20,
+        "min_samples_leaf": 10
+      }
+    },
+    "Random Forest": {
+      "cv_accuracy_mean": 0.6741353682107956,
+      "cv_accuracy_std": 0.0065959768501329475,
+      "cv_f1_mean": 0.721406974526217,
+      "cv_f1_std": 0.003935098446003423,
+      "cv_auc_mean": 0.7364401124175508,
+      "cv_auc_std": 0.003701054597800608,
+      "best_params": {
+        "max_depth": null,
+        "min_samples_leaf": 5,
+        "n_estimators": 100
+      }
+    },
+    "Gradient Boosting": {
+      "cv_accuracy_mean": 0.6761041183069109,
+      "cv_accuracy_std": 0.008728761423404417,
+      "cv_f1_mean": 0.7292833297132992,
+      "cv_f1_std": 0.006982194243708656,
+      "cv_auc_mean": 0.7357239771159867,
+      "cv_auc_std": 0.004665368742291302,
+      "best_params": {
+        "learning_rate": 0.1,
+        "max_depth": 3,
+        "n_estimators": 100
+      }
+    },
+    "Extra Trees": {
+      "cv_accuracy_mean": 0.6743222823739593,
+      "cv_accuracy_std": 0.006839818676501648,
+      "cv_f1_mean": 0.7252250013009969,
+      "cv_f1_std": 0.003963509506380937,
+      "cv_auc_mean": 0.735274840258789,
+      "cv_auc_std": 0.003945495550613452,
+      "best_params": {
+        "max_depth": 20,
+        "min_samples_leaf": 5,
+        "n_estimators": 200
+      }
+    }
+  },
+  "leakage_warning_thresholds": {
+    "accuracy": 0.9,
+    "roc_auc": 0.95
+  },
+  "forbidden_columns_verified_absent": [
+    "status",
+    "target",
+    "funding_total_usd",
+    "funding_rounds",
+    "last_funding_at",
+    "first_funding_at",
+    "founding_year",
+    "has_founding_date",
+    "is_usa"
+  ]
+}

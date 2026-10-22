@@ -1,0 +1,1496 @@
+{
+  "Logistic Regression": {
+    "type": "coefficients",
+    "note": "Absolute coefficient magnitude used for ranking. Positive = associated with success (class 1). Negative = associated with failure (class 0). This is correlation, NOT causation.",
+    "top_20": [
+      {
+        "feature": "country_RUS",
+        "coefficient": -1.427555890911659,
+        "abs_coefficient": 1.427555890911659
+      },
+      {
+        "feature": "cat_Unknown",
+        "coefficient": -1.1627943298822134,
+        "abs_coefficient": 1.1627943298822134
+      },
+      {
+        "feature": "country_Unknown",
+        "coefficient": -0.9484218443342425,
+        "abs_coefficient": 0.9484218443342425
+      },
+      {
+        "feature": "cat_Biotechnology",
+        "coefficient": 0.8879920320540904,
+        "abs_coefficient": 0.8879920320540904
+      },
+      {
+        "feature": "cat_Enterprise_Software",
+        "coefficient": 0.8140403033164242,
+        "abs_coefficient": 0.8140403033164242
+      },
+      {
+        "feature": "cat_Analytics",
+        "coefficient": 0.7662499915574601,
+        "abs_coefficient": 0.7662499915574601
+      },
+      {
+        "feature": "cat_Security",
+        "coefficient": 0.7428861301746188,
+        "abs_coefficient": 0.7428861301746188
+      },
+      {
+        "feature": "cat_Semiconductors",
+        "coefficient": 0.6863617766878676,
+        "abs_coefficient": 0.6863617766878676
+      },
+      {
+        "feature": "cat_Services",
+        "coefficient": -0.6554964462233919,
+        "abs_coefficient": 0.6554964462233919
+      },
+      {
+        "feature": "cat_Web_Hosting",
+        "coefficient": 0.628883550832557,
+        "abs_coefficient": 0.628883550832557
+      },
+      {
+        "feature": "country_USA",
+        "coefficient": 0.5876571596817501,
+        "abs_coefficient": 0.5876571596817501
+      },
+      {
+        "feature": "country_CHN",
+        "coefficient": 0.5686765706796751,
+        "abs_coefficient": 0.5686765706796751
+      },
+      {
+        "feature": "cat_Health_Care",
+        "coefficient": 0.5302124140101258,
+        "abs_coefficient": 0.5302124140101258
+      },
+      {
+        "feature": "cat_Software",
+        "coefficient": 0.5205366400471048,
+        "abs_coefficient": 0.5205366400471048
+      },
+      {
+        "feature": "cat_Social_Media",
+        "coefficient": -0.4701666910805954,
+        "abs_coefficient": 0.4701666910805954
+      },
+      {
+        "feature": "country_ISR",
+        "coefficient": 0.40154061593765117,
+        "abs_coefficient": 0.40154061593765117
+      },
+      {
+        "feature": "country_CAN",
+        "coefficient": 0.3738690225766125,
+        "abs_coefficient": 0.3738690225766125
+      },
+      {
+        "feature": "cat_Hardware_plus_Software",
+        "coefficient": 0.36052807944465964,
+        "abs_coefficient": 0.36052807944465964
+      },
+      {
+        "feature": "is_sf_bay_area",
+        "coefficient": 0.346020785798393,
+        "abs_coefficient": 0.346020785798393
+      },
+      {
+        "feature": "cat_Advertising",
+        "coefficient": 0.34420395396690595,
+        "abs_coefficient": 0.34420395396690595
+      }
+    ]
+  },
+  "Decision Tree": {
+    "type": "feature_importances",
+    "top_20": [
+      {
+        "feature": "country_Unknown",
+        "importance": 0.39267479608110284
+      },
+      {
+        "feature": "country_USA",
+        "importance": 0.09656718622201296
+      },
+      {
+        "feature": "cat_Unknown",
+        "importance": 0.08469527098269745
+      },
+      {
+        "feature": "n_categories",
+        "importance": 0.0642785747806184
+      },
+      {
+        "feature": "country_RUS",
+        "importance": 0.040845979414670844
+      },
+      {
+        "feature": "cat_Biotechnology",
+        "importance": 0.03375800044999018
+      },
+      {
+        "feature": "cat_Curated_Web",
+        "importance": 0.026428251174145993
+      },
+      {
+        "feature": "cat_Software",
+        "importance": 0.023954178888452603
+      },
+      {
+        "feature": "cat_Social_Media",
+        "importance": 0.0217639627152693
+      },
+      {
+        "feature": "cat_Enterprise_Software",
+        "importance": 0.020148600191282076
+      },
+      {
+        "feature": "cat_Services",
+        "importance": 0.0164140701216512
+      },
+      {
+        "feature": "country_other",
+        "importance": 0.016069215518861778
+      },
+      {
+        "feature": "category_other",
+        "importance": 0.015989197767736992
+      },
+      {
+        "feature": "cat_Semiconductors",
+        "importance": 0.010931218475664365
+      },
+      {
+        "feature": "is_california",
+        "importance": 0.010293259903102935
+      },
+      {
+        "feature": "cat_Security",
+        "importance": 0.009474960040393316
+      },
+      {
+        "feature": "cat_Analytics",
+        "importance": 0.008883493381503776
+      },
+      {
+        "feature": "is_sf_bay_area",
+        "importance": 0.008726235169185989
+      },
+      {
+        "feature": "cat_E-Commerce",
+        "importance": 0.007990009964615307
+      },
+      {
+        "feature": "country_GBR",
+        "importance": 0.007686153757958562
+      }
+    ],
+    "all": [
+      {
+        "feature": "is_sf_bay_area",
+        "importance": 0.008726235169185989
+      },
+      {
+        "feature": "is_california",
+        "importance": 0.010293259903102935
+      },
+      {
+        "feature": "country_USA",
+        "importance": 0.09656718622201296
+      },
+      {
+        "feature": "country_Unknown",
+        "importance": 0.39267479608110284
+      },
+      {
+        "feature": "country_GBR",
+        "importance": 0.007686153757958562
+      },
+      {
+        "feature": "country_CAN",
+        "importance": 0.0014642332608244127
+      },
+      {
+        "feature": "country_ISR",
+        "importance": 0.004722862823819977
+      },
+      {
+        "feature": "country_DEU",
+        "importance": 0.0011439618334382665
+      },
+      {
+        "feature": "country_FRA",
+        "importance": 0.0018327618176970668
+      },
+      {
+        "feature": "country_RUS",
+        "importance": 0.040845979414670844
+      },
+      {
+        "feature": "country_CHN",
+        "importance": 0.001666040208060969
+      },
+      {
+        "feature": "country_IND",
+        "importance": 0.0
+      },
+      {
+        "feature": "country_other",
+        "importance": 0.016069215518861778
+      },
+      {
+        "feature": "cat_Software",
+        "importance": 0.023954178888452603
+      },
+      {
+        "feature": "cat_Biotechnology",
+        "importance": 0.03375800044999018
+      },
+      {
+        "feature": "cat_Mobile",
+        "importance": 0.006999489569959547
+      },
+      {
+        "feature": "cat_Unknown",
+        "importance": 0.08469527098269745
+      },
+      {
+        "feature": "cat_Curated_Web",
+        "importance": 0.026428251174145993
+      },
+      {
+        "feature": "cat_E-Commerce",
+        "importance": 0.007990009964615307
+      },
+      {
+        "feature": "cat_Social_Media",
+        "importance": 0.0217639627152693
+      },
+      {
+        "feature": "cat_Advertising",
+        "importance": 0.003469573245561413
+      },
+      {
+        "feature": "cat_Enterprise_Software",
+        "importance": 0.020148600191282076
+      },
+      {
+        "feature": "cat_Games",
+        "importance": 0.0023782604694605556
+      },
+      {
+        "feature": "cat_Health_Care",
+        "importance": 0.004203207327320989
+      },
+      {
+        "feature": "cat_Services",
+        "importance": 0.0164140701216512
+      },
+      {
+        "feature": "cat_Internet",
+        "importance": 0.001763734639596884
+      },
+      {
+        "feature": "cat_Finance",
+        "importance": 0.0
+      },
+      {
+        "feature": "cat_Technology",
+        "importance": 0.004704481052696154
+      },
+      {
+        "feature": "cat_Analytics",
+        "importance": 0.008883493381503776
+      },
+      {
+        "feature": "cat_Hardware_plus_Software",
+        "importance": 0.0032292156332070425
+      },
+      {
+        "feature": "cat_Security",
+        "importance": 0.009474960040393316
+      },
+      {
+        "feature": "cat_Clean_Technology",
+        "importance": 0.0010283673100243743
+      },
+      {
+        "feature": "cat_Apps",
+        "importance": 0.0010675895269735183
+      },
+      {
+        "feature": "cat_Semiconductors",
+        "importance": 0.010931218475664365
+      },
+      {
+        "feature": "cat_SaaS",
+        "importance": 0.0040051935043486754
+      },
+      {
+        "feature": "cat_Health_and_Wellness",
+        "importance": 0.0014607736615211504
+      },
+      {
+        "feature": "cat_Web_Hosting",
+        "importance": 0.0046904188370675524
+      },
+      {
+        "feature": "cat_Networking",
+        "importance": 0.005200637301438906
+      },
+      {
+        "feature": "cat_Video",
+        "importance": 0.002151381225646558
+      },
+      {
+        "feature": "cat_Social_Network_Media",
+        "importance": 0.003821202267980187
+      },
+      {
+        "feature": "cat_Search",
+        "importance": 0.0
+      },
+      {
+        "feature": "cat_Manufacturing",
+        "importance": 0.0
+      },
+      {
+        "feature": "cat_Music",
+        "importance": 0.0
+      },
+      {
+        "feature": "cat_Education",
+        "importance": 0.0030970548540651937
+      },
+      {
+        "feature": "cat_Messaging",
+        "importance": 0.0
+      },
+      {
+        "feature": "cat_Cloud_Computing",
+        "importance": 0.0011731293262190073
+      },
+      {
+        "feature": "cat_Medical",
+        "importance": 0.0013909284158660552
+      },
+      {
+        "feature": "cat_News",
+        "importance": 0.0035928255701472827
+      },
+      {
+        "feature": "cat_Travel",
+        "importance": 0.0
+      },
+      {
+        "feature": "cat_Information_Technology",
+        "importance": 0.0022240800390525748
+      },
+      {
+        "feature": "cat_Web_Development",
+        "importance": 0.002016742188484209
+      },
+      {
+        "feature": "cat_Telecommunications",
+        "importance": 0.0031219779654504576
+      },
+      {
+        "feature": "cat_Business_Services",
+        "importance": 0.0
+      },
+      {
+        "feature": "cat_Media",
+        "importance": 0.0
+      },
+      {
+        "feature": "cat_Sales_and_Marketing",
+        "importance": 0.0
+      },
+      {
+        "feature": "cat_Entertainment",
+        "importance": 0.0011674678540738999
+      },
+      {
+        "feature": "cat_iPhone",
+        "importance": 0.0
+      },
+      {
+        "feature": "cat_Design",
+        "importance": 0.0
+      },
+      {
+        "feature": "cat_Fashion",
+        "importance": 0.0
+      },
+      {
+        "feature": "cat_Consulting",
+        "importance": 0.0013156934847612261
+      },
+      {
+        "feature": "cat_Marketplaces",
+        "importance": 0.0023240997843188846
+      },
+      {
+        "feature": "cat_Android",
+        "importance": 0.0
+      },
+      {
+        "feature": "cat_FinTech",
+        "importance": 0.0
+      },
+      {
+        "feature": "category_other",
+        "importance": 0.015989197767736992
+      },
+      {
+        "feature": "n_categories",
+        "importance": 0.0642785747806184
+      }
+    ]
+  },
+  "Random Forest": {
+    "type": "feature_importances",
+    "top_20": [
+      {
+        "feature": "country_Unknown",
+        "importance": 0.20361217201857257
+      },
+      {
+        "feature": "country_USA",
+        "importance": 0.13553940560193817
+      },
+      {
+        "feature": "cat_Unknown",
+        "importance": 0.128743616730118
+      },
+      {
+        "feature": "cat_Biotechnology",
+        "importance": 0.046001517201850514
+      },
+      {
+        "feature": "country_RUS",
+        "importance": 0.039485574441448526
+      },
+      {
+        "feature": "n_categories",
+        "importance": 0.03802829998693297
+      },
+      {
+        "feature": "is_sf_bay_area",
+        "importance": 0.024799283850681482
+      },
+      {
+        "feature": "cat_Software",
+        "importance": 0.024332624724041754
+      },
+      {
+        "feature": "is_california",
+        "importance": 0.02294513780833045
+      },
+      {
+        "feature": "cat_Enterprise_Software",
+        "importance": 0.022859478932882933
+      },
+      {
+        "feature": "cat_Curated_Web",
+        "importance": 0.01978718624225478
+      },
+      {
+        "feature": "country_other",
+        "importance": 0.019278293442368446
+      },
+      {
+        "feature": "cat_Services",
+        "importance": 0.018009228602827984
+      },
+      {
+        "feature": "cat_Social_Media",
+        "importance": 0.01698968614943099
+      },
+      {
+        "feature": "cat_Analytics",
+        "importance": 0.014051987876318579
+      },
+      {
+        "feature": "cat_Health_Care",
+        "importance": 0.012107266431893877
+      },
+      {
+        "feature": "category_other",
+        "importance": 0.011448555425103093
+      },
+      {
+        "feature": "cat_Security",
+        "importance": 0.011380326186950175
+      },
+      {
+        "feature": "cat_Semiconductors",
+        "importance": 0.00993974439858809
+      },
+      {
+        "feature": "cat_Mobile",
+        "importance": 0.008778554422743544
+      }
+    ],
+    "all": [
+      {
+        "feature": "is_sf_bay_area",
+        "importance": 0.024799283850681482
+      },
+      {
+        "feature": "is_california",
+        "importance": 0.02294513780833045
+      },
+      {
+        "feature": "country_USA",
+        "importance": 0.13553940560193817
+      },
+      {
+        "feature": "country_Unknown",
+        "importance": 0.20361217201857257
+      },
+      {
+        "feature": "country_GBR",
+        "importance": 0.007743036784964095
+      },
+      {
+        "feature": "country_CAN",
+        "importance": 0.007946258205807917
+      },
+      {
+        "feature": "country_ISR",
+        "importance": 0.005489592941902983
+      },
+      {
+        "feature": "country_DEU",
+        "importance": 0.0034065210279651814
+      },
+      {
+        "feature": "country_FRA",
+        "importance": 0.0022807655839770804
+      },
+      {
+        "feature": "country_RUS",
+        "importance": 0.039485574441448526
+      },
+      {
+        "feature": "country_CHN",
+        "importance": 0.006261636614476199
+      },
+      {
+        "feature": "country_IND",
+        "importance": 0.0018638846689530816
+      },
+      {
+        "feature": "country_other",
+        "importance": 0.019278293442368446
+      },
+      {
+        "feature": "cat_Software",
+        "importance": 0.024332624724041754
+      },
+      {
+        "feature": "cat_Biotechnology",
+        "importance": 0.046001517201850514
+      },
+      {
+        "feature": "cat_Mobile",
+        "importance": 0.008778554422743544
+      },
+      {
+        "feature": "cat_Unknown",
+        "importance": 0.128743616730118
+      },
+      {
+        "feature": "cat_Curated_Web",
+        "importance": 0.01978718624225478
+      },
+      {
+        "feature": "cat_E-Commerce",
+        "importance": 0.008190518993271924
+      },
+      {
+        "feature": "cat_Social_Media",
+        "importance": 0.01698968614943099
+      },
+      {
+        "feature": "cat_Advertising",
+        "importance": 0.006298004533021115
+      },
+      {
+        "feature": "cat_Enterprise_Software",
+        "importance": 0.022859478932882933
+      },
+      {
+        "feature": "cat_Games",
+        "importance": 0.0064545676762400115
+      },
+      {
+        "feature": "cat_Health_Care",
+        "importance": 0.012107266431893877
+      },
+      {
+        "feature": "cat_Services",
+        "importance": 0.018009228602827984
+      },
+      {
+        "feature": "cat_Internet",
+        "importance": 0.005232803353310695
+      },
+      {
+        "feature": "cat_Finance",
+        "importance": 0.0040912706300961325
+      },
+      {
+        "feature": "cat_Technology",
+        "importance": 0.0044799882213277
+      },
+      {
+        "feature": "cat_Analytics",
+        "importance": 0.014051987876318579
+      },
+      {
+        "feature": "cat_Hardware_plus_Software",
+        "importance": 0.004350266972643846
+      },
+      {
+        "feature": "cat_Security",
+        "importance": 0.011380326186950175
+      },
+      {
+        "feature": "cat_Clean_Technology",
+        "importance": 0.004468973204010146
+      },
+      {
+        "feature": "cat_Apps",
+        "importance": 0.004923588643133365
+      },
+      {
+        "feature": "cat_Semiconductors",
+        "importance": 0.00993974439858809
+      },
+      {
+        "feature": "cat_SaaS",
+        "importance": 0.0038981089392561186
+      },
+      {
+        "feature": "cat_Health_and_Wellness",
+        "importance": 0.002245590473387817
+      },
+      {
+        "feature": "cat_Web_Hosting",
+        "importance": 0.007752137044094084
+      },
+      {
+        "feature": "cat_Networking",
+        "importance": 0.004994134194058916
+      },
+      {
+        "feature": "cat_Video",
+        "importance": 0.003279971344103929
+      },
+      {
+        "feature": "cat_Social_Network_Media",
+        "importance": 0.005218123673251499
+      },
+      {
+        "feature": "cat_Search",
+        "importance": 0.004181088119817387
+      },
+      {
+        "feature": "cat_Manufacturing",
+        "importance": 0.0024630903582190957
+      },
+      {
+        "feature": "cat_Music",
+        "importance": 0.00453061601976133
+      },
+      {
+        "feature": "cat_Education",
+        "importance": 0.003192230355838922
+      },
+      {
+        "feature": "cat_Messaging",
+        "importance": 0.003384426756883452
+      },
+      {
+        "feature": "cat_Cloud_Computing",
+        "importance": 0.002906762480165014
+      },
+      {
+        "feature": "cat_Medical",
+        "importance": 0.0030140236659182192
+      },
+      {
+        "feature": "cat_News",
+        "importance": 0.003151110579791142
+      },
+      {
+        "feature": "cat_Travel",
+        "importance": 0.00390799174268782
+      },
+      {
+        "feature": "cat_Information_Technology",
+        "importance": 0.0020893675810913824
+      },
+      {
+        "feature": "cat_Web_Development",
+        "importance": 0.002584250212108957
+      },
+      {
+        "feature": "cat_Telecommunications",
+        "importance": 0.003722419703999455
+      },
+      {
+        "feature": "cat_Business_Services",
+        "importance": 0.0021315372335137094
+      },
+      {
+        "feature": "cat_Media",
+        "importance": 0.001487867697001942
+      },
+      {
+        "feature": "cat_Sales_and_Marketing",
+        "importance": 0.001492365212615386
+      },
+      {
+        "feature": "cat_Entertainment",
+        "importance": 0.0018928286273215806
+      },
+      {
+        "feature": "cat_iPhone",
+        "importance": 0.001456855257664122
+      },
+      {
+        "feature": "cat_Design",
+        "importance": 0.002986696706630515
+      },
+      {
+        "feature": "cat_Fashion",
+        "importance": 0.0027152008542202627
+      },
+      {
+        "feature": "cat_Consulting",
+        "importance": 0.0013729752650890829
+      },
+      {
+        "feature": "cat_Marketplaces",
+        "importance": 0.0028415512979803144
+      },
+      {
+        "feature": "cat_Android",
+        "importance": 0.0013166377769239345
+      },
+      {
+        "feature": "cat_FinTech",
+        "importance": 0.002190422296226131
+      },
+      {
+        "feature": "category_other",
+        "importance": 0.011448555425103093
+      },
+      {
+        "feature": "n_categories",
+        "importance": 0.03802829998693297
+      }
+    ]
+  },
+  "Gradient Boosting": {
+    "type": "feature_importances",
+    "top_20": [
+      {
+        "feature": "country_Unknown",
+        "importance": 0.3722782702906003
+      },
+      {
+        "feature": "country_USA",
+        "importance": 0.13030817897338623
+      },
+      {
+        "feature": "cat_Unknown",
+        "importance": 0.09450835336926341
+      },
+      {
+        "feature": "cat_Biotechnology",
+        "importance": 0.05450923087091614
+      },
+      {
+        "feature": "country_RUS",
+        "importance": 0.045611520598444075
+      },
+      {
+        "feature": "n_categories",
+        "importance": 0.02787515645786642
+      },
+      {
+        "feature": "cat_Software",
+        "importance": 0.026416111684457552
+      },
+      {
+        "feature": "cat_Enterprise_Software",
+        "importance": 0.023040980956760933
+      },
+      {
+        "feature": "cat_Social_Media",
+        "importance": 0.019907793439680212
+      },
+      {
+        "feature": "cat_Analytics",
+        "importance": 0.019431170296594323
+      },
+      {
+        "feature": "cat_Services",
+        "importance": 0.016920498978975764
+      },
+      {
+        "feature": "cat_Curated_Web",
+        "importance": 0.015331543990889365
+      },
+      {
+        "feature": "country_other",
+        "importance": 0.014216564268438668
+      },
+      {
+        "feature": "cat_Security",
+        "importance": 0.01278286229794513
+      },
+      {
+        "feature": "cat_Semiconductors",
+        "importance": 0.010524649540175885
+      },
+      {
+        "feature": "cat_Health_Care",
+        "importance": 0.009989155319925742
+      },
+      {
+        "feature": "is_sf_bay_area",
+        "importance": 0.009956463681976934
+      },
+      {
+        "feature": "cat_Web_Hosting",
+        "importance": 0.007369952475965262
+      },
+      {
+        "feature": "cat_Advertising",
+        "importance": 0.005785934708235116
+      },
+      {
+        "feature": "country_CAN",
+        "importance": 0.005263230416285761
+      }
+    ],
+    "all": [
+      {
+        "feature": "is_sf_bay_area",
+        "importance": 0.009956463681976934
+      },
+      {
+        "feature": "is_california",
+        "importance": 0.0002055251303001096
+      },
+      {
+        "feature": "country_USA",
+        "importance": 0.13030817897338623
+      },
+      {
+        "feature": "country_Unknown",
+        "importance": 0.3722782702906003
+      },
+      {
+        "feature": "country_GBR",
+        "importance": 0.0049112401822132175
+      },
+      {
+        "feature": "country_CAN",
+        "importance": 0.005263230416285761
+      },
+      {
+        "feature": "country_ISR",
+        "importance": 0.003940823759172746
+      },
+      {
+        "feature": "country_DEU",
+        "importance": 0.0005925744871415551
+      },
+      {
+        "feature": "country_FRA",
+        "importance": 0.0001884547976673193
+      },
+      {
+        "feature": "country_RUS",
+        "importance": 0.045611520598444075
+      },
+      {
+        "feature": "country_CHN",
+        "importance": 0.004944194883610073
+      },
+      {
+        "feature": "country_IND",
+        "importance": 0.0011665344068189072
+      },
+      {
+        "feature": "country_other",
+        "importance": 0.014216564268438668
+      },
+      {
+        "feature": "cat_Software",
+        "importance": 0.026416111684457552
+      },
+      {
+        "feature": "cat_Biotechnology",
+        "importance": 0.05450923087091614
+      },
+      {
+        "feature": "cat_Mobile",
+        "importance": 0.003426253508887731
+      },
+      {
+        "feature": "cat_Unknown",
+        "importance": 0.09450835336926341
+      },
+      {
+        "feature": "cat_Curated_Web",
+        "importance": 0.015331543990889365
+      },
+      {
+        "feature": "cat_E-Commerce",
+        "importance": 0.0010015732220419245
+      },
+      {
+        "feature": "cat_Social_Media",
+        "importance": 0.019907793439680212
+      },
+      {
+        "feature": "cat_Advertising",
+        "importance": 0.005785934708235116
+      },
+      {
+        "feature": "cat_Enterprise_Software",
+        "importance": 0.023040980956760933
+      },
+      {
+        "feature": "cat_Games",
+        "importance": 0.0
+      },
+      {
+        "feature": "cat_Health_Care",
+        "importance": 0.009989155319925742
+      },
+      {
+        "feature": "cat_Services",
+        "importance": 0.016920498978975764
+      },
+      {
+        "feature": "cat_Internet",
+        "importance": 0.0032913422605412336
+      },
+      {
+        "feature": "cat_Finance",
+        "importance": 0.002361985017366077
+      },
+      {
+        "feature": "cat_Technology",
+        "importance": 0.0038574778800373488
+      },
+      {
+        "feature": "cat_Analytics",
+        "importance": 0.019431170296594323
+      },
+      {
+        "feature": "cat_Hardware_plus_Software",
+        "importance": 0.003009587936070252
+      },
+      {
+        "feature": "cat_Security",
+        "importance": 0.01278286229794513
+      },
+      {
+        "feature": "cat_Clean_Technology",
+        "importance": 0.0003920780172094203
+      },
+      {
+        "feature": "cat_Apps",
+        "importance": 0.0019795015010384766
+      },
+      {
+        "feature": "cat_Semiconductors",
+        "importance": 0.010524649540175885
+      },
+      {
+        "feature": "cat_SaaS",
+        "importance": 0.0018156515359999189
+      },
+      {
+        "feature": "cat_Health_and_Wellness",
+        "importance": 0.0013226746736757506
+      },
+      {
+        "feature": "cat_Web_Hosting",
+        "importance": 0.007369952475965262
+      },
+      {
+        "feature": "cat_Networking",
+        "importance": 0.0029691404599280252
+      },
+      {
+        "feature": "cat_Video",
+        "importance": 0.0020274822258088436
+      },
+      {
+        "feature": "cat_Social_Network_Media",
+        "importance": 0.0037593416256261466
+      },
+      {
+        "feature": "cat_Search",
+        "importance": 0.0035329929100367226
+      },
+      {
+        "feature": "cat_Manufacturing",
+        "importance": 0.0
+      },
+      {
+        "feature": "cat_Music",
+        "importance": 0.002694076705719036
+      },
+      {
+        "feature": "cat_Education",
+        "importance": 0.00034659722560337846
+      },
+      {
+        "feature": "cat_Messaging",
+        "importance": 0.0006529025030475805
+      },
+      {
+        "feature": "cat_Cloud_Computing",
+        "importance": 0.0012315633430138929
+      },
+      {
+        "feature": "cat_Medical",
+        "importance": 0.001177882135688207
+      },
+      {
+        "feature": "cat_News",
+        "importance": 0.0015149450441759506
+      },
+      {
+        "feature": "cat_Travel",
+        "importance": 0.0013252674624978824
+      },
+      {
+        "feature": "cat_Information_Technology",
+        "importance": 0.0012332536041506504
+      },
+      {
+        "feature": "cat_Web_Development",
+        "importance": 0.0016236181348807776
+      },
+      {
+        "feature": "cat_Telecommunications",
+        "importance": 0.003474281586782806
+      },
+      {
+        "feature": "cat_Business_Services",
+        "importance": 0.0
+      },
+      {
+        "feature": "cat_Media",
+        "importance": 0.0
+      },
+      {
+        "feature": "cat_Sales_and_Marketing",
+        "importance": 0.002124196104782018
+      },
+      {
+        "feature": "cat_Entertainment",
+        "importance": 0.00017785161240999514
+      },
+      {
+        "feature": "cat_iPhone",
+        "importance": 0.0006366707245846824
+      },
+      {
+        "feature": "cat_Design",
+        "importance": 0.0018637075078564527
+      },
+      {
+        "feature": "cat_Fashion",
+        "importance": 0.001352845176597036
+      },
+      {
+        "feature": "cat_Consulting",
+        "importance": 0.0005482537505390733
+      },
+      {
+        "feature": "cat_Marketplaces",
+        "importance": 0.0017930604308870246
+      },
+      {
+        "feature": "cat_Android",
+        "importance": 0.001079056966446887
+      },
+      {
+        "feature": "cat_FinTech",
+        "importance": 0.0017669919304540733
+      },
+      {
+        "feature": "category_other",
+        "importance": 0.0006589250119073862
+      },
+      {
+        "feature": "n_categories",
+        "importance": 0.02787515645786642
+      }
+    ]
+  },
+  "Extra Trees": {
+    "type": "feature_importances",
+    "top_20": [
+      {
+        "feature": "country_Unknown",
+        "importance": 0.2151727947543438
+      },
+      {
+        "feature": "country_USA",
+        "importance": 0.16431914609816045
+      },
+      {
+        "feature": "cat_Unknown",
+        "importance": 0.14980054333006956
+      },
+      {
+        "feature": "cat_Biotechnology",
+        "importance": 0.05576904644962567
+      },
+      {
+        "feature": "country_RUS",
+        "importance": 0.046355410497686114
+      },
+      {
+        "feature": "cat_Enterprise_Software",
+        "importance": 0.0271684209960648
+      },
+      {
+        "feature": "is_sf_bay_area",
+        "importance": 0.027119620400784694
+      },
+      {
+        "feature": "cat_Software",
+        "importance": 0.02591065096779015
+      },
+      {
+        "feature": "is_california",
+        "importance": 0.024275496266364376
+      },
+      {
+        "feature": "country_other",
+        "importance": 0.019690536277200545
+      },
+      {
+        "feature": "cat_Services",
+        "importance": 0.01838119116385761
+      },
+      {
+        "feature": "cat_Curated_Web",
+        "importance": 0.017391853316791592
+      },
+      {
+        "feature": "cat_Social_Media",
+        "importance": 0.015959142212975376
+      },
+      {
+        "feature": "cat_Analytics",
+        "importance": 0.014267975856097502
+      },
+      {
+        "feature": "cat_Health_Care",
+        "importance": 0.01234145127250186
+      },
+      {
+        "feature": "cat_Security",
+        "importance": 0.010994846288777796
+      },
+      {
+        "feature": "cat_Semiconductors",
+        "importance": 0.009926829408624717
+      },
+      {
+        "feature": "country_CAN",
+        "importance": 0.00988097382282964
+      },
+      {
+        "feature": "category_other",
+        "importance": 0.008500796682917333
+      },
+      {
+        "feature": "cat_Web_Hosting",
+        "importance": 0.007987875044585428
+      }
+    ],
+    "all": [
+      {
+        "feature": "is_sf_bay_area",
+        "importance": 0.027119620400784694
+      },
+      {
+        "feature": "is_california",
+        "importance": 0.024275496266364376
+      },
+      {
+        "feature": "country_USA",
+        "importance": 0.16431914609816045
+      },
+      {
+        "feature": "country_Unknown",
+        "importance": 0.2151727947543438
+      },
+      {
+        "feature": "country_GBR",
+        "importance": 0.006504810603354863
+      },
+      {
+        "feature": "country_CAN",
+        "importance": 0.00988097382282964
+      },
+      {
+        "feature": "country_ISR",
+        "importance": 0.005387836318613611
+      },
+      {
+        "feature": "country_DEU",
+        "importance": 0.0029050195028856897
+      },
+      {
+        "feature": "country_FRA",
+        "importance": 0.001168139286407703
+      },
+      {
+        "feature": "country_RUS",
+        "importance": 0.046355410497686114
+      },
+      {
+        "feature": "country_CHN",
+        "importance": 0.006214386216275623
+      },
+      {
+        "feature": "country_IND",
+        "importance": 0.0012665771916441887
+      },
+      {
+        "feature": "country_other",
+        "importance": 0.019690536277200545
+      },
+      {
+        "feature": "cat_Software",
+        "importance": 0.02591065096779015
+      },
+      {
+        "feature": "cat_Biotechnology",
+        "importance": 0.05576904644962567
+      },
+      {
+        "feature": "cat_Mobile",
+        "importance": 0.005472621632151384
+      },
+      {
+        "feature": "cat_Unknown",
+        "importance": 0.14980054333006956
+      },
+      {
+        "feature": "cat_Curated_Web",
+        "importance": 0.017391853316791592
+      },
+      {
+        "feature": "cat_E-Commerce",
+        "importance": 0.00573067412534126
+      },
+      {
+        "feature": "cat_Social_Media",
+        "importance": 0.015959142212975376
+      },
+      {
+        "feature": "cat_Advertising",
+        "importance": 0.003999780889730239
+      },
+      {
+        "feature": "cat_Enterprise_Software",
+        "importance": 0.0271684209960648
+      },
+      {
+        "feature": "cat_Games",
+        "importance": 0.0039745037190714
+      },
+      {
+        "feature": "cat_Health_Care",
+        "importance": 0.01234145127250186
+      },
+      {
+        "feature": "cat_Services",
+        "importance": 0.01838119116385761
+      },
+      {
+        "feature": "cat_Internet",
+        "importance": 0.0030612318857899303
+      },
+      {
+        "feature": "cat_Finance",
+        "importance": 0.0015173771213183736
+      },
+      {
+        "feature": "cat_Technology",
+        "importance": 0.003049474195629907
+      },
+      {
+        "feature": "cat_Analytics",
+        "importance": 0.014267975856097502
+      },
+      {
+        "feature": "cat_Hardware_plus_Software",
+        "importance": 0.002635711993833334
+      },
+      {
+        "feature": "cat_Security",
+        "importance": 0.010994846288777796
+      },
+      {
+        "feature": "cat_Clean_Technology",
+        "importance": 0.0017757850218267411
+      },
+      {
+        "feature": "cat_Apps",
+        "importance": 0.0037700477646943763
+      },
+      {
+        "feature": "cat_Semiconductors",
+        "importance": 0.009926829408624717
+      },
+      {
+        "feature": "cat_SaaS",
+        "importance": 0.002285203016294399
+      },
+      {
+        "feature": "cat_Health_and_Wellness",
+        "importance": 0.0011578922530572106
+      },
+      {
+        "feature": "cat_Web_Hosting",
+        "importance": 0.007987875044585428
+      },
+      {
+        "feature": "cat_Networking",
+        "importance": 0.00437594525268826
+      },
+      {
+        "feature": "cat_Video",
+        "importance": 0.0024818049542448934
+      },
+      {
+        "feature": "cat_Social_Network_Media",
+        "importance": 0.004754339879862181
+      },
+      {
+        "feature": "cat_Search",
+        "importance": 0.0021029663868033727
+      },
+      {
+        "feature": "cat_Manufacturing",
+        "importance": 0.0004736799558586757
+      },
+      {
+        "feature": "cat_Music",
+        "importance": 0.004188924806995057
+      },
+      {
+        "feature": "cat_Education",
+        "importance": 0.0018537030516725154
+      },
+      {
+        "feature": "cat_Messaging",
+        "importance": 0.0016978986983743984
+      },
+      {
+        "feature": "cat_Cloud_Computing",
+        "importance": 0.0025484650835661984
+      },
+      {
+        "feature": "cat_Medical",
+        "importance": 0.0020640830119624813
+      },
+      {
+        "feature": "cat_News",
+        "importance": 0.0017108381916710333
+      },
+      {
+        "feature": "cat_Travel",
+        "importance": 0.0014996547553863958
+      },
+      {
+        "feature": "cat_Information_Technology",
+        "importance": 0.001039441970176605
+      },
+      {
+        "feature": "cat_Web_Development",
+        "importance": 0.002159795312759793
+      },
+      {
+        "feature": "cat_Telecommunications",
+        "importance": 0.0020142254797365948
+      },
+      {
+        "feature": "cat_Business_Services",
+        "importance": 0.0012554666175738547
+      },
+      {
+        "feature": "cat_Media",
+        "importance": 0.0007144225039352066
+      },
+      {
+        "feature": "cat_Sales_and_Marketing",
+        "importance": 0.0009720793855617573
+      },
+      {
+        "feature": "cat_Entertainment",
+        "importance": 0.001245711378936534
+      },
+      {
+        "feature": "cat_iPhone",
+        "importance": 0.00059266334035697
+      },
+      {
+        "feature": "cat_Design",
+        "importance": 0.0014128596416089804
+      },
+      {
+        "feature": "cat_Fashion",
+        "importance": 0.001754267678340753
+      },
+      {
+        "feature": "cat_Consulting",
+        "importance": 0.0006768522116869303
+      },
+      {
+        "feature": "cat_Marketplaces",
+        "importance": 0.001968755241363569
+      },
+      {
+        "feature": "cat_Android",
+        "importance": 0.0015249578522898426
+      },
+      {
+        "feature": "cat_FinTech",
+        "importance": 0.0020593509231845303
+      },
+      {
+        "feature": "category_other",
+        "importance": 0.008500796682917333
+      },
+      {
+        "feature": "n_categories",
+        "importance": 0.007765172587433377
+      }
+    ]
+  }
+}

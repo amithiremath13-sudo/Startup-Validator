@@ -1,0 +1,657 @@
+======================================================================
+  AI-Based Startup Viability Prediction and Validation System
+  Phase 1 – Exploratory Data Analysis
+======================================================================
+  Dataset : d:\Web Development\startup validator\big_startup_secsees_dataset.csv
+  Plots   : d:\Web Development\startup validator\outputs\plots
+  Reports : d:\Web Development\startup validator\outputs\reports
+  Data    : d:\Web Development\startup validator\data
+
+======================================================================
+  SECTION 1 – LOAD THE DATASET
+======================================================================
+  CSV path : d:\Web Development\startup validator\big_startup_secsees_dataset.csv
+  File loaded successfully.
+
+======================================================================
+  SECTION 2 – BASIC SHAPE AND SCHEMA
+======================================================================
+
+--- Dataset Dimensions ---
+  Rows    : 66,368
+  Columns : 14
+
+--- Column Names ---
+   1. permalink
+   2. name
+   3. homepage_url
+   4. category_list
+   5. funding_total_usd
+   6. status
+   7. country_code
+   8. state_code
+   9. region
+  10. city
+  11. funding_rounds
+  12. founded_at
+  13. first_funding_at
+  14. last_funding_at
+
+--- Data Types (as inferred by pandas) ---
+  Column                    Dtype          
+  ------------------------- ---------------
+  permalink                 str            
+  name                      str            
+  homepage_url              str            
+  category_list             str            
+  funding_total_usd         str            
+  status                    str            
+  country_code              str            
+  state_code                str            
+  region                    str            
+  city                      str            
+  funding_rounds            int64          
+  founded_at                str            
+  first_funding_at          str            
+  last_funding_at           str            
+
+  NOTE: pandas reads all columns as 'object' (string) unless
+  values are clearly numeric. Date columns will appear as 'object'
+  here – we parse them explicitly in Section 7.
+
+======================================================================
+  SECTION 3 – STATUS COLUMN ANALYSIS AND BINARY TARGET CREATION
+======================================================================
+
+--- Raw Status Counts ---
+  Status             Count  Percentage
+  --------------- --------  ----------
+  operating         53,034      79.91%
+  closed             6,238       9.40%
+  acquired           5,549       8.36%
+  ipo                1,547       2.33%
+
+--- Status Definitions for This Project ---
+  acquired  → company was bought by another company           → SUCCESS (label = 1)
+  ipo       → company went public on stock exchange           → SUCCESS (label = 1)
+  closed    → company shut down / went out of business        → FAILURE (label = 0)
+  operating → company is still running at time of data collection
+              → UNKNOWN outcome; EXCLUDED from training dataset
+  (NaN)     → status not recorded                             → EXCLUDED
+
+--- Binary Target Distribution (Training-Eligible Companies Only) ---
+  Label 0 (FAILURE – closed)           :   6,238
+  Label 1 (SUCCESS – acquired or ipo)  :   7,096
+  Total training-eligible rows         :  13,334
+  Operating (excluded from training)   :  53,034
+  Other / NaN status (excluded)        :       0
+
+  Class ratio (failure : success)      : 0.88 : 1
+  [PLOT SAVED] d:\Web Development\startup validator\outputs\plots\03_status_distribution.png
+
+======================================================================
+  SECTION 4 – MISSING VALUE ANALYSIS
+======================================================================
+
+--- Missing Values – Full Dataset (all rows) ---
+  Column                     Missing   % Missing  Status
+  ------------------------- --------  ----------  --------------------
+  permalink                        0       0.00%  OK
+  name                             1       0.00%  LOW
+  homepage_url                 5,058       7.62%  MODERATE
+  category_list                3,148       4.74%  LOW
+  funding_total_usd                0       0.00%  OK
+  status                           0       0.00%  OK
+  country_code                 6,958      10.48%  MODERATE
+  state_code                   8,547      12.88%  MODERATE
+  region                       8,030      12.10%  MODERATE
+  city                         8,028      12.10%  MODERATE
+  funding_rounds                   0       0.00%  OK
+  founded_at                  15,221      22.93%  MODERATE
+  first_funding_at                24       0.04%  LOW
+  last_funding_at                  0       0.00%  OK
+
+--- Missing Values – Training Dataset (known outcomes only) ---
+  Column                     Missing   % Missing  Status
+  ------------------------- --------  ----------  --------------------
+  permalink                        0       0.00%  OK
+  name                             1       0.01%  LOW
+  homepage_url                 1,217       9.13%  MODERATE
+  category_list                1,086       8.14%  MODERATE
+  funding_total_usd                0       0.00%  OK
+  status                           0       0.00%  OK
+  country_code                 1,991      14.93%  MODERATE
+  state_code                   2,209      16.57%  MODERATE
+  region                       2,152      16.14%  MODERATE
+  city                         2,152      16.14%  MODERATE
+  funding_rounds                   0       0.00%  OK
+  founded_at                   3,732      27.99%  MODERATE
+  first_funding_at                 2       0.01%  LOW
+  last_funding_at                  0       0.00%  OK
+  target                           0       0.00%  OK
+  [PLOT SAVED] d:\Web Development\startup validator\outputs\plots\04_missing_values_heatmap.png
+
+======================================================================
+  SECTION 5 – DUPLICATE RECORDS
+======================================================================
+
+  Exact duplicate rows (all 14 columns identical) : 0
+
+  Companies with duplicate names                   : 239
+  Total rows involved in name duplicates           : 504
+
+--- Top 15 Most-Duplicated Company Names ---
+  Company Name                                   Occurrences
+  --------------------------------------------- ------------
+  Blink                                                    4
+  Karma                                                    4
+  Spire                                                    4
+  Roost                                                    4
+  Peach                                                    4
+  Bundle                                                   3
+  Gather                                                   3
+  Chime                                                    3
+  Compass                                                  3
+  Dash                                                     3
+  Dispatch                                                 3
+  Marquee                                                  3
+  Robin                                                    3
+  Helpr                                                    3
+  Hopscotch                                                3
+
+--- Permalink Uniqueness Check ---
+  Duplicate permalink values (true data duplicates): 0
+
+  DECISION: Do NOT automatically delete duplicate names.
+  Reason: Same name ≠ same company. Use permalink as the true unique ID.
+
+======================================================================
+  SECTION 6 – FUNDING_TOTAL_USD INSPECTION
+======================================================================
+
+--- Non-Numeric Values in funding_total_usd ---
+  Originally missing (blank)               : 0
+  Became NaN after numeric conversion      : 12,785
+  Newly nullified (were non-numeric text)  : 12,785
+
+  Sample of non-numeric values found:
+  Value                   Count
+  -------------------- --------
+  -                      12,785
+
+--- Descriptive Statistics (after numeric conversion) ---
+  Count (non-null)  :          53,583
+  Mean              : $  18,478,604.04
+  Std Dev           : $ 188,013,272.80
+  Min               : $           1.00
+  25th percentile   : $     335,623.50
+  Median (50th)     : $   2,000,000.00
+  75th percentile   : $  10,000,000.00
+  Max               : $30,079,503,000.00
+
+--- Outlier Inspection (IQR Method) ---
+  Q1 (25th pct)     : $     335,623.50
+  Q3 (75th pct)     : $  10,000,000.00
+  IQR               : $   9,664,376.50
+  Lower fence       : $ -14,160,941.25
+  Upper fence       : $  24,496,564.75
+  Outlier count     :           7,384
+  % of total rows   :          11.13%
+
+--- Top 10 Highest Funding Values ---
+   1. Verizon Communications                   $      30,079,503,000
+   2. Freescale Semiconductor                  $      17,600,000,000
+   3. Cambridge Technology Group               $      10,664,943,639
+   4. Uber                                     $       8,207,450,000
+   5. Clearwire                                $       5,820,000,000
+   6. Sberbank                                 $       5,800,000,000
+   7. Charter Communications                   $       5,162,513,431
+   8. Cambridge Technology Partners (CTP)      $       5,150,000,000
+   9. Alibaba                                  $       4,812,000,000
+  10. Ping An                                  $       4,745,460,219
+  [PLOT SAVED] d:\Web Development\startup validator\outputs\plots\06_funding_distribution.png
+
+======================================================================
+  SECTION 7 – DATE COLUMN INSPECTION
+======================================================================
+
+--- Column: founded_at ---
+  Originally missing             : 15,221
+  NaT after parsing              : 15,221
+  Newly unparseable (bad strings): 0
+  Earliest date                  : 1015-01-30
+  Latest date                    : 2914-01-01
+  Dates after 2023 (suspicious) : 4
+  Sample suspicious future dates:
+    Row 16681: 2105-02-17  (company: DugoutFC Ltd)
+    Row 32736: 2041-09-21  (company: LIVAMP)
+    Row 47830: 2914-01-01  (company: rent2cash.com)
+    Row 53396: 2104-01-01  (company: Soply)
+  Dates before 1800 (suspicious): 8
+
+  Year range with most activity:
+    1999:    949  █████
+    2000:  1,080  ██████
+    2003:  1,076  ██████
+    2004:  1,281  ███████
+    2005:  1,559  █████████
+    2006:  1,967  ████████████
+    2007:  2,531  ███████████████
+    2008:  2,626  ████████████████
+    2009:  3,323  ████████████████████
+    2010:  4,253  ██████████████████████████
+    2011:  5,624  ███████████████████████████████████
+    2012:  6,425  ████████████████████████████████████████
+    2013:  6,259  ██████████████████████████████████████
+    2014:  4,964  ██████████████████████████████
+    2015:  1,578  █████████
+
+--- Column: first_funding_at ---
+  Originally missing             : 24
+  NaT after parsing              : 24
+  Newly unparseable (bad strings): 0
+  Earliest date                  : 1014-03-01
+  Latest date                    : 2015-12-05
+  Dates after 2023 (suspicious) : 0
+  Dates before 1800 (suspicious): 3
+
+  Year range with most activity:
+    2001:    614  ██
+    2002:    517  █
+    2003:    781  ██
+    2004:    908  ███
+    2005:  1,605  █████
+    2006:  2,041  ██████
+    2007:  2,986  ██████████
+    2008:  2,911  █████████
+    2009:  3,970  █████████████
+    2010:  5,022  ████████████████
+    2011:  6,249  █████████████████████
+    2012:  7,625  █████████████████████████
+    2013:  9,980  █████████████████████████████████
+    2014: 11,846  ████████████████████████████████████████
+    2015:  8,236  ███████████████████████████
+
+--- Column: last_funding_at ---
+  Originally missing             : 0
+  NaT after parsing              : 0
+  Newly unparseable (bad strings): 0
+  Earliest date                  : 1971-01-01
+  Latest date                    : 2115-12-01
+  Dates after 2023 (suspicious) : 2
+  Sample suspicious future dates:
+    Row 46956: 2105-05-01  (company: Rasyonel R&D)
+    Row 63921: 2115-12-01  (company: Wigzo Technologies)
+  Dates before 1800 (suspicious): 0
+
+  Year range with most activity:
+    2001:    414  █
+    2002:    324  
+    2003:    549  █
+    2004:    574  █
+    2005:    884  ██
+    2006:  1,215  ███
+    2007:  2,105  █████
+    2008:  2,271  ██████
+    2009:  2,916  ███████
+    2010:  3,983  ██████████
+    2011:  5,088  █████████████
+    2012:  6,380  █████████████████
+    2013:  9,495  █████████████████████████
+    2014: 14,574  ███████████████████████████████████████
+    2015: 14,859  ████████████████████████████████████████
+  [PLOT SAVED] d:\Web Development\startup validator\outputs\plots\07_date_distributions.png
+
+======================================================================
+  SECTION 8 – CATEGORY_LIST ANALYSIS
+======================================================================
+  Rows with at least one category : 63,220
+  Rows with no category (missing) : 3,148
+
+  Total category mentions (with repeats) : 152,658
+  Unique individual categories            : 858
+
+--- Top 30 Most Common Individual Categories ---
+  Category                               Count   % of Categorized Rows
+  ----------------------------------- --------  ----------------------
+  Software                               8,768                   13.9%
+  Mobile                                 5,557                    8.8%
+  Biotechnology                          4,562                    7.2%
+  E-Commerce                             4,152                    6.6%
+  Curated Web                            3,030                    4.8%
+  Social Media                           2,897                    4.6%
+  Enterprise Software                    2,694                    4.3%
+  Advertising                            2,470                    3.9%
+  Health Care                            2,385                    3.8%
+  Games                                  2,284                    3.6%
+  Internet                               2,071                    3.3%
+  SaaS                                   1,989                    3.1%
+  Education                              1,968                    3.1%
+  Health and Wellness                    1,929                    3.1%
+  Apps                                   1,876                    3.0%
+  Analytics                              1,839                    2.9%
+  Finance                                1,839                    2.9%
+  Technology                             1,830                    2.9%
+  Clean Technology                       1,565                    2.5%
+  Hardware + Software                    1,499                    2.4%
+  Services                               1,440                    2.3%
+  Manufacturing                          1,399                    2.2%
+  Medical                                1,203                    1.9%
+  Marketplaces                           1,147                    1.8%
+  Security                               1,091                    1.7%
+  Video                                  1,075                    1.7%
+  Fashion                                1,071                    1.7%
+  Entertainment                            944                    1.5%
+  Big Data                                 929                    1.5%
+  Consulting                               925                    1.5%
+
+  Categories per company:
+    Min    : 1
+    Max    : 44
+    Median : 2.0
+    Mean   : 2.41
+
+--- How to Transform category_list into ML Features (Future Phase) ---
+
+  The model cannot consume raw text like "Mobile|Apps|Games" directly.
+  Three approaches are commonly used:
+
+  Option A – Multi-hot encoding (Binary flags):
+    Create one binary column per category (1 = company is in that category).
+    E.g.:  col_Mobile=1, col_Apps=1, col_Games=1, col_SaaS=0, ...
+    PRO: Simple, interpretable.
+    CON: With ~1000+ categories, this creates very wide (sparse) feature sets.
+    RECOMMENDED: Apply only to the top N (e.g. top 50) categories.
+
+  Option B – Category grouping (Macro-sectors):
+    Map individual categories to broader sectors:
+    "Mobile", "Apps", "Games" → "Consumer Technology"
+    "SaaS", "Enterprise Software" → "B2B Software"
+    PRO: Fewer columns, reduces sparsity.
+    CON: Requires manual mapping effort.
+
+  Option C – Frequency encoding:
+    Replace category with how common it is in successful companies.
+    E.g.:  category_success_rate = success_count / total_count for that category.
+    PRO: Single numeric column, captures signal.
+    CON: Requires careful cross-validation to avoid leakage.
+
+  RECOMMENDED FOR THIS PROJECT:
+    Use Option A with top 30–50 categories, combined with a
+    "number of categories" numeric feature.
+  
+  [PLOT SAVED] d:\Web Development\startup validator\outputs\plots\08_top_categories.png
+
+======================================================================
+  SECTION 9 – GEOGRAPHIC COLUMN ANALYSIS
+======================================================================
+
+--- Column: country_code ---
+  Missing values : 6,958  (10.5%)
+  Unique values  : 137
+  Top 10 values:
+  Value                        Count       %
+  ------------------------- --------  ------
+  USA                         37,601   56.7%
+  GBR                          3,688    5.6%
+  CAN                          1,925    2.9%
+  IND                          1,596    2.4%
+  CHN                          1,544    2.3%
+  FRA                          1,135    1.7%
+  DEU                          1,082    1.6%
+  ISR                            965    1.5%
+  ESP                            746    1.1%
+  AUS                            503    0.8%
+
+--- Column: state_code ---
+  Missing values : 8,547  (12.9%)
+  Unique values  : 311
+  Top 10 values:
+  Value                        Count       %
+  ------------------------- --------  ------
+  CA                          12,900   19.4%
+  NY                           3,952    6.0%
+  MA                           2,542    3.8%
+  TX                           1,995    3.0%
+  H9                           1,911    2.9%
+  7                            1,414    2.1%
+  FL                           1,295    2.0%
+  WA                           1,261    1.9%
+  2                            1,160    1.7%
+  IL                           1,082    1.6%
+
+--- Column: region ---
+  Missing values : 8,030  (12.1%)
+  Unique values  : 1,092
+  Top 10 values:
+  Value                        Count       %
+  ------------------------- --------  ------
+  SF Bay Area                  8,804   13.3%
+  New York City                3,528    5.3%
+  Boston                       2,378    3.6%
+  London                       2,345    3.5%
+  Los Angeles                  1,877    2.8%
+  Seattle                      1,207    1.8%
+  Washington, D.C.             1,035    1.6%
+  Chicago                        980    1.5%
+  San Diego                      899    1.4%
+  Denver                         831    1.3%
+
+--- Column: city ---
+  Missing values : 8,028  (12.1%)
+  Unique values  : 5,111
+  Top 10 values:
+  Value                        Count       %
+  ------------------------- --------  ------
+  San Francisco                3,526    5.3%
+  New York                     3,164    4.8%
+  London                       1,917    2.9%
+  Austin                         774    1.2%
+  Palo Alto                      769    1.2%
+  Los Angeles                    756    1.1%
+  Seattle                        749    1.1%
+  Chicago                        689    1.0%
+  Cambridge                      679    1.0%
+  Boston                         661    1.0%
+  [PLOT SAVED] d:\Web Development\startup validator\outputs\plots\09_geographic_distribution.png
+
+--- Geographic ML Strategy ---
+
+  country_code : High cardinality (~140+ unique) but useful.
+    → Target-encode or use top-N countries + "Other" bucket.
+    → 'USA' dominates the dataset; a binary is_usa flag may suffice.
+
+  state_code   : Only meaningful for USA companies; sparse for others.
+    → Conditionally useful for USA-only sub-model; otherwise drop.
+
+  region       : Meaningful only within a country context.
+    → If using, restrict to USA companies; too sparse globally.
+
+  city         : Very high cardinality (~10,000+ unique cities).
+    → Likely too sparse for direct use. Drop or aggregate to region.
+  
+
+======================================================================
+  SECTION 10 – FUNDING_ROUNDS INSPECTION
+======================================================================
+  Missing values : 0
+  Non-numeric    : 0
+  Min            : 1
+  Max            : 19
+  Median         : 1
+  Mean           : 1.73
+
+  Distribution of funding_rounds values:
+      1 rounds:  42,472  ██████████████████████████████
+      2 rounds:  12,353  ████████
+      3 rounds:   5,606  ███
+      4 rounds:   2,739  █
+      5 rounds:   1,468  █
+      6 rounds:     774  
+      7 rounds:     418  
+      8 rounds:     214  
+      9 rounds:     126  
+     10 rounds:      79  
+     11 rounds:      51  
+     12 rounds:      28  
+     13 rounds:      15  
+     14 rounds:       6  
+     15 rounds:       6  
+     16 rounds:       6  
+     17 rounds:       3  
+     18 rounds:       3  
+     19 rounds:       1  
+  [PLOT SAVED] d:\Web Development\startup validator\outputs\plots\10_funding_rounds.png
+
+======================================================================
+  SECTION 11 – COLUMN RECOMMENDATIONS
+======================================================================
+
+  ┌─────────────────────┬────────────────────┬────────────────────────────────────────────────┐
+  │ Column              │ Recommendation      │ Reason                                         │
+  ├─────────────────────┼────────────────────┼────────────────────────────────────────────────┤
+  │ permalink           │ EXCLUDE             │ Unique identifier, no predictive signal        │
+  │ name                │ EXCLUDE (as feature)│ Company name has no pattern; use as label only  │
+  │ homepage_url        │ EXCLUDE             │ Raw URL; no direct signal for ML               │
+  │ status              │ TARGET ONLY         │ Used to create the binary target label         │
+  │ country_code        │ USE (encoded)       │ Geography matters; target-encode top countries  │
+  │ state_code          │ CONDITIONAL         │ Only useful for USA companies                  │
+  │ region              │ CONDITIONAL         │ Only useful for USA companies                  │
+  │ city                │ EXCLUDE or group    │ Too high cardinality (10,000+ unique cities)   │
+  │ category_list       │ TRANSFORM           │ Multi-hot encode top 30–50 categories          │
+  │ funding_total_usd   │ USE with caution ⚠ │ Strong signal but POTENTIAL LEAKAGE (see §12)  │
+  │ funding_rounds      │ USE with caution ⚠ │ Strong signal but POTENTIAL LEAKAGE (see §12)  │
+  │ founded_at          │ USE (engineered)    │ Extract year; compute company age at prediction│
+  │ first_funding_at    │ USE with caution ⚠ │ Time-to-first-funding is a valid early signal  │
+  │ last_funding_at     │ HIGH LEAKAGE RISK ⚠│ Represents future activity; see §12            │
+  └─────────────────────┴────────────────────┴────────────────────────────────────────────────┘
+  
+
+======================================================================
+  SECTION 12 – DATA LEAKAGE ANALYSIS
+======================================================================
+
+  DATA LEAKAGE means accidentally including information in your model that
+  would NOT be available at the moment you are making a real prediction.
+  This makes model accuracy look artificially high in testing, but the model
+  fails completely when deployed in the real world.
+
+  ┌────────────────────┬───────────────┬──────────────────────────────────────────────────┐
+  │ Column             │ Leakage Risk  │ Explanation                                      │
+  ├────────────────────┼───────────────┼──────────────────────────────────────────────────┤
+  │ funding_total_usd  │ HIGH ⚠        │ Reflects TOTAL funding raised over the entire    │
+  │                    │               │ life of the company. For a company that later     │
+  │                    │               │ gets acquired, this includes acquisition-phase    │
+  │                    │               │ funding raised AFTER the prediction point.        │
+  │                    │               │ MITIGATION: Only use funding_total_usd up to a   │
+  │                    │               │ fixed "prediction point" (e.g., 2 years after    │
+  │                    │               │ founding). We don't have time-series funding      │
+  │                    │               │ data here, so this column carries leakage risk.  │
+  ├────────────────────┼───────────────┼──────────────────────────────────────────────────┤
+  │ funding_rounds     │ HIGH ⚠        │ Same problem: total rounds includes rounds that  │
+  │                    │               │ happen AFTER the outcome is determined.           │
+  │                    │               │ A Series C round often occurs BECAUSE the company│
+  │                    │               │ is doing well — it's a consequence of success,    │
+  │                    │               │ not a predictor of it.                           │
+  ├────────────────────┼───────────────┼──────────────────────────────────────────────────┤
+  │ first_funding_at   │ LOW-MODERATE  │ The date of the FIRST funding event is a         │
+  │                    │               │ relatively early signal. If our prediction point  │
+  │                    │               │ is "after first funding", this is legitimate.     │
+  │                    │               │ MITIGATION: Compute time_to_first_funding         │
+  │                    │               │ (days from founding to first funding) as a        │
+  │                    │               │ feature. This is available at prediction time.    │
+  ├────────────────────┼───────────────┼──────────────────────────────────────────────────┤
+  │ last_funding_at    │ VERY HIGH ⚠   │ This is the date of the MOST RECENT funding      │
+  │                    │               │ round. For a company acquired in 2018, the last  │
+  │                    │               │ funding might be from 2017 — just before         │
+  │                    │               │ acquisition. Including this date essentially      │
+  │                    │               │ tells the model "a deal is imminent."            │
+  │                    │               │ → RECOMMEND: Exclude this column entirely.       │
+  └────────────────────┴───────────────┴──────────────────────────────────────────────────┘
+
+  SUMMARY:
+  All funding-related columns carry some leakage risk because our dataset
+  records TOTAL or FINAL values — not values as of a fixed early time point.
+  In Phase 2 (preprocessing), we will define a strict "prediction point" and
+  decide how to handle these columns defensibly.
+  
+
+======================================================================
+  SECTION 13 – DEFENSIBLE PREDICTION-TIME DEFINITION
+======================================================================
+
+  THE CORE QUESTION:
+  "At what point in a company's life are we making a prediction?"
+
+  Without answering this precisely, the model is meaningless — any feature
+  that occurs AFTER this point is leakage.
+
+  ─────────────────────────────────────────────────────────────────────────
+  PROPOSED PREDICTION POINT
+  ─────────────────────────────────────────────────────────────────────────
+
+  We define the prediction point as:
+
+      "12–24 months after the company's first funding round."
+
+  RATIONALE:
+  1. By the time a startup receives its first external funding, a real investor
+     has already conducted due diligence. This is a natural "early stage"
+     evaluation moment.
+
+  2. "Time to first funding" (founded_at → first_funding_at) is legitimately
+     available before the prediction point and captures momentum.
+
+  3. This avoids using data that only exists at the END of a company's journey
+     (like last_funding_at or total_funding across 10 years).
+
+  ─────────────────────────────────────────────────────────────────────────
+  FEATURES LEGITIMATELY AVAILABLE AT THE PREDICTION POINT
+  ─────────────────────────────────────────────────────────────────────────
+
+  ✅ founded_at → derived feature: founding_year, company_age_at_prediction
+  ✅ first_funding_at → derived: time_to_first_funding (days)
+  ✅ category_list → the startup's industry/sector at founding
+  ✅ country_code → where the company is headquartered
+  ✅ region / state_code → sub-national geography (for USA)
+  ✅ funding_total_usd → ONLY if interpreted as "funding raised up to first round"
+                         (we cannot isolate this perfectly from the current data)
+  ✅ funding_rounds → ONLY the count as of first funding = 1 (trivially 1)
+
+  ⚠  funding_total_usd → Use with documented caveat: this reflects lifetime total
+  ⚠  funding_rounds → Same caveat
+  ❌ last_funding_at → Exclude: reflects future funding activity
+  ❌ status → This IS the target; never use as a feature
+  ❌ permalink, name, homepage_url → identifiers, not signals
+
+  ─────────────────────────────────────────────────────────────────────────
+  RECOMMENDED ENGINEERED FEATURES (Phase 2)
+  ─────────────────────────────────────────────────────────────────────────
+
+  1. founding_year          = year extracted from founded_at
+  2. time_to_first_funding  = (first_funding_at - founded_at).days
+                              → how quickly did the startup attract funding?
+  3. has_founding_date      = binary flag (1 if founded_at is not null)
+  4. is_usa                 = binary flag (1 if country_code == 'USA')
+  5. n_categories           = number of pipe-separated categories in category_list
+  6. category_X             = multi-hot encoding for top 30 categories
+  7. log_funding            = log10(funding_total_usd + 1)  [with leakage caveat]
+
+  ─────────────────────────────────────────────────────────────────────────
+  ACADEMIC CAVEAT
+  ─────────────────────────────────────────────────────────────────────────
+
+  This dataset does NOT provide time-series funding data per round.
+  Therefore, perfect leakage elimination is not possible.
+  The approach above MINIMISES leakage and must be clearly documented
+  in the project report as a known limitation.
+  
+
+======================================================================
+  SECTION 14 – SAVING INTERMEDIATE DATA
+======================================================================
+  Labeled dataset saved  : d:\Web Development\startup validator\data\labeled_known_outcomes.csv  (13,334 rows)
+  Operating dataset saved: d:\Web Development\startup validator\data\operating_companies.csv  (53,034 rows)
+
+  NOTE: Original CSV was NEVER modified.
+  These are derived files only, stored in /data.

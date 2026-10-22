@@ -1,0 +1,266 @@
+======================================================================
+  AI-Based Startup Viability Prediction — Phase 2 Preprocessing
+======================================================================
+  Prediction point : Day 0 (pre-funding idea stage)
+  Spec reference   : ML_METHODOLOGY.md Section 11
+  Random seed      : 42
+  Test fraction    : 20%
+  Top categories   : 50
+  Top countries    : 10
+  scikit-learn     : 1.9.1
+
+======================================================================
+  STEP 1 — LOAD RAW DATA
+======================================================================
+  Loaded : d:\Web Development\startup validator\big_startup_secsees_dataset.csv
+  Shape  : 66,368 rows × 14 columns
+  Columns: ['permalink', 'name', 'homepage_url', 'category_list', 'funding_total_usd', 'status', 'country_code', 'state_code', 'region', 'city', 'funding_rounds', 'founded_at', 'first_funding_at', 'last_funding_at']
+
+======================================================================
+  STEP 2 — CREATE BINARY TARGET
+======================================================================
+
+--- Raw status distribution ---
+  operating        53,034  (79.91%)
+  closed            6,238  (9.40%)
+  acquired          5,549  (8.36%)
+  ipo               1,547  (2.33%)
+
+--- Binary target distribution (labeled rows only) ---
+  Label 1 (SUCCESS – acquired or ipo) :   7,096
+  Label 0 (FAILURE – closed)          :   6,238
+  Total labeled rows                  :  13,334
+  Operating (excluded)                :  53,034
+  Other / NaN status (excluded)       :       0
+
+======================================================================
+  STEP 3 — TRAIN / TEST SPLIT
+======================================================================
+  Random seed  : 42
+  Test fraction: 20%
+  Train rows   : 10,667  (target=1: 5,677  target=0: 4,990)
+  Test rows    : 2,667  (target=1: 1,419  target=0: 1,248)
+
+======================================================================
+  STEP 4 — CLEAN DATE COLUMNS
+======================================================================
+  Parsing founded_at. Invalid years (>2023 or <1800) → NaT.
+  These were identified as typos in Phase 1 EDA.
+  Note: first_funding_at is parsed but will NOT become a feature.
+  It is only needed to confirm data quality; it is dropped later.
+  [train] founded_at: 2 rows nulled (2 future, 0 past)
+  [train] last_funding_at: 1 rows nulled (1 future, 0 past)
+  [test] founded_at: 1 rows nulled (0 future, 1 past)
+  Date cleaning complete.
+
+======================================================================
+  STEP 5 — ENGINEER founding_year AND has_founding_date
+======================================================================
+  Training set founding_year median (used for imputation): 2007
+  Missing founding_year — train: 2,996  test: 739
+  founding_year range (train): 1802 – 2016
+
+======================================================================
+  STEP 6 — ENGINEER GEOGRAPHY FLAGS
+======================================================================
+  Creating: is_usa, is_sf_bay_area, is_california
+  These replace the raw state_code and region columns.
+  No statistics needed — pure rule-based derivation.
+  [train] is_usa=6,533  is_sf_bay_area=1,986  is_california=2,706
+  [test] is_usa=1,639  is_sf_bay_area=512  is_california=696
+
+======================================================================
+  STEP 7 — ENCODE country_code (top 10 countries)
+======================================================================
+  Top 10 countries (by training-set frequency):
+     1. USA         6,533 rows
+     2. Unknown     1,582 rows
+     3. GBR           440 rows
+     4. CAN           330 rows
+     5. ISR           164 rows
+     6. DEU           152 rows
+     7. FRA           147 rows
+     8. RUS           140 rows
+     9. CHN           136 rows
+    10. IND           109 rows
+  Created 10 country binary columns + country_other
+
+======================================================================
+  STEP 8 — ENCODE category_list (top 50 categories)
+======================================================================
+  Unique categories in training set: 714
+  Top 50 categories (training frequency):
+     1. Software                             1,493
+     2. Biotechnology                          924
+     3. Mobile                                 883
+     4. Unknown                                858
+     5. Curated Web                            776
+     6. E-Commerce                             534
+     7. Social Media                           499
+     8. Advertising                            488
+     9. Enterprise Software                    482
+    10. Games                                  402
+    11. Health Care                            402
+    12. Services                               344
+    13. Internet                               323
+    14. Finance                                293
+    15. Technology                             279
+    16. Analytics                              264
+    17. Hardware + Software                    242
+    18. Security                               234
+    19. Clean Technology                       229
+    20. Apps                                   217
+    ... (30 more categories encoded, not shown)
+  n_categories — train mean: 2.20  max: 17
+  Created 50 category binary columns + category_other + n_categories
+
+======================================================================
+  STEP 9 — ASSEMBLE FINAL FEATURE MATRIX
+======================================================================
+  Total features assembled: 65
+    Geography flags  : 2  (is_sf_bay_area, is_california)
+    Country columns  : 11
+    Year columns     : 0  (founding_year and has_founding_date excluded — see comments)
+    Category columns : 52
+
+  Final feature matrix shapes:
+    X_train : 10,667 rows × 65 features
+    X_test  : 2,667 rows × 65 features
+
+======================================================================
+  STEP 10 — LEAKAGE AUDIT
+======================================================================
+  Checking that no forbidden columns appear in the final feature matrix.
+  Forbidden columns list: ['status', 'last_funding_at', 'funding_total_usd', 'funding_rounds', 'first_funding_at', 'permalink', 'name', 'homepage_url', 'city', 'target', 'founding_year', 'has_founding_date', 'is_usa']
+  OK — No forbidden columns found in feature matrix.
+
+--- All final feature names ---
+    1. is_sf_bay_area
+    2. is_california
+    3. country_USA
+    4. country_Unknown
+    5. country_GBR
+    6. country_CAN
+    7. country_ISR
+    8. country_DEU
+    9. country_FRA
+   10. country_RUS
+   11. country_CHN
+   12. country_IND
+   13. country_other
+   14. cat_Software
+   15. cat_Biotechnology
+   16. cat_Mobile
+   17. cat_Unknown
+   18. cat_Curated_Web
+   19. cat_E-Commerce
+   20. cat_Social_Media
+   21. cat_Advertising
+   22. cat_Enterprise_Software
+   23. cat_Games
+   24. cat_Health_Care
+   25. cat_Services
+   26. cat_Internet
+   27. cat_Finance
+   28. cat_Technology
+   29. cat_Analytics
+   30. cat_Hardware_plus_Software
+   31. cat_Security
+   32. cat_Clean_Technology
+   33. cat_Apps
+   34. cat_Semiconductors
+   35. cat_SaaS
+   36. cat_Health_and_Wellness
+   37. cat_Web_Hosting
+   38. cat_Networking
+   39. cat_Video
+   40. cat_Social_Network_Media
+   41. cat_Search
+   42. cat_Manufacturing
+   43. cat_Music
+   44. cat_Education
+   45. cat_Messaging
+   46. cat_Cloud_Computing
+   47. cat_Medical
+   48. cat_News
+   49. cat_Travel
+   50. cat_Information_Technology
+   51. cat_Web_Development
+   52. cat_Telecommunications
+   53. cat_Business_Services
+   54. cat_Media
+   55. cat_Sales_and_Marketing
+   56. cat_Entertainment
+   57. cat_iPhone
+   58. cat_Design
+   59. cat_Fashion
+   60. cat_Consulting
+   61. cat_Marketplaces
+   62. cat_Android
+   63. cat_FinTech
+   64. category_other
+   65. n_categories
+
+  Total feature count: 65
+
+  Remaining NaN values — train: 0  test: 0
+  OK — Feature matrices are fully numeric with no NaN values.
+
+======================================================================
+  STEP 11 — SAVE OUTPUTS
+======================================================================
+  Saved: d:\Web Development\startup validator\processed_data\train_features.csv
+  Saved: d:\Web Development\startup validator\processed_data\train_labels.csv
+  Saved: d:\Web Development\startup validator\processed_data\test_features.csv
+  Saved: d:\Web Development\startup validator\processed_data\test_labels.csv
+  Saved: d:\Web Development\startup validator\processed_data\feature_names.json
+  Saved: d:\Web Development\startup validator\processed_data\preprocessing_metadata.json
+
+======================================================================
+  STEP 12 — FINAL SUMMARY
+======================================================================
+
+  PREDICTION POINT : Day 0 (idea / founding stage, pre-funding)
+  SPEC REFERENCE   : ML_METHODOLOGY.md Section 11
+
+--- Dataset sizes ---
+  Training rows    : 10,667
+  Test rows        : 2,667
+  Total features   : 65
+
+--- Target distribution ---
+  Train — class 1 (success):  5,677  (53.2%)
+  Train — class 0 (failure):  4,990  (46.8%)
+  Test  — class 1 (success):  1,419  (53.2%)
+  Test  — class 0 (failure):  1,248  (46.8%)
+
+--- Feature group breakdown ---
+  Geography flags  : 2  (is_sf_bay_area, is_california)
+  Country flags    : 11
+  Year features    : 0  (founding_year + has_founding_date excluded)
+  Category features: 52
+
+--- Leakage check — forbidden columns absent ---
+         OK  status
+         OK  last_funding_at
+         OK  funding_total_usd
+         OK  funding_rounds
+         OK  first_funding_at
+         OK  permalink
+         OK  name
+         OK  homepage_url
+         OK  city
+         OK  target
+         OK  founding_year
+         OK  has_founding_date
+         OK  is_usa
+
+--- NaN check ---
+  NaN in train features: 0
+  NaN in test features : 0
+
+  Original CSV was NOT modified.
+  All outputs saved to /processed_data.
+
+  Phase 2 complete. DO NOT start Phase 3 / model training
+  until this output has been reviewed and approved.

@@ -1,0 +1,385 @@
+======================================================================
+  AI-Based Startup Viability Prediction — Phase 3 Model Training
+======================================================================
+  Random seed      : 42
+  CV folds         : 5
+  Expected features: 65
+
+======================================================================
+  STEP 1 — LOAD DATA
+======================================================================
+  X_train : 10,667 rows × 65 features
+  X_test  : 2,667 rows × 65 features
+  y_train : class 1 = 5,677  class 0 = 4,990
+  y_test  : class 1 = 1,419  class 0 = 1,248
+  Feature names loaded: 65
+
+======================================================================
+  STEP 2 — PRE-TRAINING LEAKAGE AUDIT
+======================================================================
+  OK — 65 features, no forbidden columns, no NaN, column order matches JSON
+  Test set has been loaded but will NOT be used until Step 8.
+
+======================================================================
+  STEP 3 — MAJORITY-CLASS BASELINE
+======================================================================
+  Majority class in training set : 1
+  Baseline accuracy (test set)   : 0.5321  (53.21%)
+  Any model must exceed 53.21% to add value.
+
+======================================================================
+  STEP 4 — MODEL DEFINITIONS AND HYPERPARAMETER GRIDS
+======================================================================
+  Logistic Regression        3 param combinations × 5 folds = 15 fits
+  Decision Tree              12 param combinations × 5 folds = 60 fits
+  Random Forest              12 param combinations × 5 folds = 60 fits
+  Gradient Boosting          8 param combinations × 5 folds = 40 fits
+  Extra Trees                12 param combinations × 5 folds = 60 fits
+
+======================================================================
+  STEP 5 — STRATIFIEDKFOLD GRID SEARCH (training data only)
+======================================================================
+
+--- Tuning: Logistic Regression ---
+  Best params   : {'C': 0.1, 'penalty': 'l2'}
+  Best CV AUC   : 0.7364
+  Time          : 12.6s
+  CV Accuracy   : 0.6750 ± 0.0096
+  CV F1         : 0.7141 ± 0.0060
+  CV AUC        : 0.7364 ± 0.0060
+
+--- Tuning: Decision Tree ---
+  Best params   : {'max_depth': 20, 'min_samples_leaf': 10}
+  Best CV AUC   : 0.7188
+  Time          : 1.3s
+  CV Accuracy   : 0.6647 ± 0.0036
+  CV F1         : 0.7135 ± 0.0046
+  CV AUC        : 0.7188 ± 0.0035
+
+--- Tuning: Random Forest ---
+  Best params   : {'max_depth': None, 'min_samples_leaf': 5, 'n_estimators': 100}
+  Best CV AUC   : 0.7364
+  Time          : 9.8s
+  CV Accuracy   : 0.6741 ± 0.0066
+  CV F1         : 0.7214 ± 0.0039
+  CV AUC        : 0.7364 ± 0.0037
+
+--- Tuning: Gradient Boosting ---
+  Best params   : {'learning_rate': 0.1, 'max_depth': 3, 'n_estimators': 100}
+  Best CV AUC   : 0.7357
+  Time          : 12.3s
+  CV Accuracy   : 0.6761 ± 0.0087
+  CV F1         : 0.7293 ± 0.0070
+  CV AUC        : 0.7357 ± 0.0047
+
+--- Tuning: Extra Trees ---
+  Best params   : {'max_depth': 20, 'min_samples_leaf': 5, 'n_estimators': 200}
+  Best CV AUC   : 0.7353
+  Time          : 11.0s
+  CV Accuracy   : 0.6743 ± 0.0068
+  CV F1         : 0.7252 ± 0.0040
+  CV AUC        : 0.7353 ± 0.0039
+
+======================================================================
+  STEP 6 — TEST SET EVALUATION (untouched set, final evaluation only)
+======================================================================
+
+--- Test evaluation: Logistic Regression ---
+  Accuracy  : 0.6944  (baseline: 0.5321  delta: +0.1624)
+  Precision : 0.6892
+  Recall    : 0.7752
+  F1-score  : 0.7297
+  ROC-AUC   : 0.7558
+  Confusion matrix (rows=actual, cols=predicted):
+    TN=  752  FP=  496
+    FN=  319  TP= 1100
+
+--- Test evaluation: Decision Tree ---
+  Accuracy  : 0.6835  (baseline: 0.5321  delta: +0.1515)
+  Precision : 0.6704
+  Recall    : 0.7970
+  F1-score  : 0.7283
+  ROC-AUC   : 0.7410
+  Confusion matrix (rows=actual, cols=predicted):
+    TN=  692  FP=  556
+    FN=  288  TP= 1131
+
+--- Test evaluation: Random Forest ---
+  Accuracy  : 0.6937  (baseline: 0.5321  delta: +0.1616)
+  Precision : 0.6769
+  Recall    : 0.8118
+  F1-score  : 0.7382
+  ROC-AUC   : 0.7599
+  Confusion matrix (rows=actual, cols=predicted):
+    TN=  698  FP=  550
+    FN=  267  TP= 1152
+
+--- Test evaluation: Gradient Boosting ---
+  Accuracy  : 0.6963  (baseline: 0.5321  delta: +0.1642)
+  Precision : 0.6737
+  Recall    : 0.8323
+  F1-score  : 0.7446
+  ROC-AUC   : 0.7587
+  Confusion matrix (rows=actual, cols=predicted):
+    TN=  676  FP=  572
+    FN=  238  TP= 1181
+
+--- Test evaluation: Extra Trees ---
+  Accuracy  : 0.7030  (baseline: 0.5321  delta: +0.1710)
+  Precision : 0.6813
+  Recall    : 0.8302
+  F1-score  : 0.7484
+  ROC-AUC   : 0.7601
+  Confusion matrix (rows=actual, cols=predicted):
+    TN=  697  FP=  551
+    FN=  241  TP= 1178
+
+======================================================================
+  STEP 7 — MODEL SELECTION (CV-based, training data only)
+======================================================================
+  SELECTION RULE (defined before any test-set results are examined):
+  Primary   criterion = highest mean CV ROC-AUC (5-fold, training only)
+  Secondary criterion = highest mean CV F1 (tie-breaker)
+  Tertiary  criterion = highest mean CV accuracy (second tie-breaker)
+
+  WHY TEST-SET RESULTS ARE NOT USED FOR SELECTION:
+  Using the test set to choose between models is a form of test-set
+  contamination. If we evaluate all models on the test set and pick
+  the one with the highest test metric, we are effectively optimising
+  for the test set — the same error we prevent during hyperparameter
+  tuning. The selected model would then appear better on the test set
+  than it really is, because we chose it precisely because it scored
+  highest on that data. The test set must produce a single, unbiased
+  estimate of performance for the pre-selected model only.
+
+  Model                         CV AUC      CV F1     CV Acc
+  ------------------------- ---------- ---------- ----------
+  Logistic Regression           0.7364     0.7141     0.6750
+  Decision Tree                 0.7188     0.7135     0.6647
+  Random Forest                 0.7364     0.7214     0.6741
+  Gradient Boosting             0.7357     0.7293     0.6761
+  Extra Trees                   0.7353     0.7252     0.6743
+
+  CV AUC near-tie among: ['Logistic Regression', 'Random Forest']
+  F1 tie-breaker resolved: Random Forest CV F1 = 0.7214
+
+  SELECTED MODEL : Random Forest
+  Selection basis: CV AUC = 0.7364  CV F1 = 0.7214
+  Selection used TRAINING DATA ONLY. Test set not consulted.
+
+  Test-set metrics for selected model (reported AFTER selection,
+  NOT used to make the selection decision):
+  Test Accuracy  : 0.6937  (baseline: 0.5321, delta: +0.1616)
+  Test Precision : 0.6769
+  Test Recall    : 0.8118
+  Test F1        : 0.7382
+  Test ROC-AUC   : 0.7599
+
+  NOTE on probability calibration:
+  ROC-AUC measures discrimination (ranking), not calibration.
+  If the application displays a numerical probability score,
+  probability calibration (e.g. Platt scaling or isotonic
+  regression) should be addressed during application integration.
+
+======================================================================
+  STEP 8 — SAVE MODELS AND METADATA
+======================================================================
+  Saved: D:\Web Development\startup validator\models\logistic_regression.joblib
+  Saved: D:\Web Development\startup validator\models\decision_tree.joblib
+  Saved: D:\Web Development\startup validator\models\random_forest.joblib
+  Saved: D:\Web Development\startup validator\models\gradient_boosting.joblib
+  Saved: D:\Web Development\startup validator\models\extra_trees.joblib
+  Saved best model: D:\Web Development\startup validator\models\best_model.joblib
+  Saved metadata: D:\Web Development\startup validator\models\model_metadata.json
+  Saved full results: D:\Web Development\startup validator\outputs\model_evaluation\results.json
+
+======================================================================
+  STEP 9 — CONFUSION MATRIX VISUALISATIONS
+======================================================================
+  Saved: D:\Web Development\startup validator\outputs\model_evaluation\cm_logistic_regression.png
+  Saved: D:\Web Development\startup validator\outputs\model_evaluation\cm_decision_tree.png
+  Saved: D:\Web Development\startup validator\outputs\model_evaluation\cm_random_forest.png
+  Saved: D:\Web Development\startup validator\outputs\model_evaluation\cm_gradient_boosting.png
+  Saved: D:\Web Development\startup validator\outputs\model_evaluation\cm_extra_trees.png
+
+======================================================================
+  STEP 10 — ROC CURVE VISUALISATIONS
+======================================================================
+  Saved: D:\Web Development\startup validator\outputs\model_evaluation\roc_all_models.png
+  Saved: D:\Web Development\startup validator\outputs\model_evaluation\roc_logistic_regression.png
+  Saved: D:\Web Development\startup validator\outputs\model_evaluation\roc_decision_tree.png
+  Saved: D:\Web Development\startup validator\outputs\model_evaluation\roc_random_forest.png
+  Saved: D:\Web Development\startup validator\outputs\model_evaluation\roc_gradient_boosting.png
+  Saved: D:\Web Development\startup validator\outputs\model_evaluation\roc_extra_trees.png
+
+======================================================================
+  STEP 11 — FEATURE IMPORTANCE
+======================================================================
+
+  Logistic Regression — Top 20 features by |coefficient|:
+  Rank  Feature                                   Coefficient   |Coef|
+  ----- ---------------------------------------- ------------ --------
+  1     country_RUS                                   -1.4276   1.4276
+  2     cat_Unknown                                   -1.1628   1.1628
+  3     country_Unknown                               -0.9484   0.9484
+  4     cat_Biotechnology                              0.8880   0.8880
+  5     cat_Enterprise_Software                        0.8140   0.8140
+  6     cat_Analytics                                  0.7662   0.7662
+  7     cat_Security                                   0.7429   0.7429
+  8     cat_Semiconductors                             0.6864   0.6864
+  9     cat_Services                                  -0.6555   0.6555
+  10    cat_Web_Hosting                                0.6289   0.6289
+  11    country_USA                                    0.5877   0.5877
+  12    country_CHN                                    0.5687   0.5687
+  13    cat_Health_Care                                0.5302   0.5302
+  14    cat_Software                                   0.5205   0.5205
+  15    cat_Social_Media                              -0.4702   0.4702
+  16    country_ISR                                    0.4015   0.4015
+  17    country_CAN                                    0.3739   0.3739
+  18    cat_Hardware_plus_Software                     0.3605   0.3605
+  19    is_sf_bay_area                                 0.3460   0.3460
+  20    cat_Advertising                                0.3442   0.3442
+  Plot saved: D:\Web Development\startup validator\outputs\model_evaluation\importance_logistic_regression.png
+
+  Decision Tree — Top 20 features by impurity importance:
+  Rank  Feature                                    Importance
+  ----- ---------------------------------------- ------------
+  1     country_Unknown                              0.392675
+  2     country_USA                                  0.096567
+  3     cat_Unknown                                  0.084695
+  4     n_categories                                 0.064279
+  5     country_RUS                                  0.040846
+  6     cat_Biotechnology                            0.033758
+  7     cat_Curated_Web                              0.026428
+  8     cat_Software                                 0.023954
+  9     cat_Social_Media                             0.021764
+  10    cat_Enterprise_Software                      0.020149
+  11    cat_Services                                 0.016414
+  12    country_other                                0.016069
+  13    category_other                               0.015989
+  14    cat_Semiconductors                           0.010931
+  15    is_california                                0.010293
+  16    cat_Security                                 0.009475
+  17    cat_Analytics                                0.008883
+  18    is_sf_bay_area                               0.008726
+  19    cat_E-Commerce                               0.007990
+  20    country_GBR                                  0.007686
+  Plot saved: D:\Web Development\startup validator\outputs\model_evaluation\importance_decision_tree.png
+
+  Random Forest — Top 20 features by impurity importance:
+  Rank  Feature                                    Importance
+  ----- ---------------------------------------- ------------
+  1     country_Unknown                              0.203612
+  2     country_USA                                  0.135539
+  3     cat_Unknown                                  0.128744
+  4     cat_Biotechnology                            0.046002
+  5     country_RUS                                  0.039486
+  6     n_categories                                 0.038028
+  7     is_sf_bay_area                               0.024799
+  8     cat_Software                                 0.024333
+  9     is_california                                0.022945
+  10    cat_Enterprise_Software                      0.022859
+  11    cat_Curated_Web                              0.019787
+  12    country_other                                0.019278
+  13    cat_Services                                 0.018009
+  14    cat_Social_Media                             0.016990
+  15    cat_Analytics                                0.014052
+  16    cat_Health_Care                              0.012107
+  17    category_other                               0.011449
+  18    cat_Security                                 0.011380
+  19    cat_Semiconductors                           0.009940
+  20    cat_Mobile                                   0.008779
+  Plot saved: D:\Web Development\startup validator\outputs\model_evaluation\importance_random_forest.png
+
+  Gradient Boosting — Top 20 features by impurity importance:
+  Rank  Feature                                    Importance
+  ----- ---------------------------------------- ------------
+  1     country_Unknown                              0.372278
+  2     country_USA                                  0.130308
+  3     cat_Unknown                                  0.094508
+  4     cat_Biotechnology                            0.054509
+  5     country_RUS                                  0.045612
+  6     n_categories                                 0.027875
+  7     cat_Software                                 0.026416
+  8     cat_Enterprise_Software                      0.023041
+  9     cat_Social_Media                             0.019908
+  10    cat_Analytics                                0.019431
+  11    cat_Services                                 0.016920
+  12    cat_Curated_Web                              0.015332
+  13    country_other                                0.014217
+  14    cat_Security                                 0.012783
+  15    cat_Semiconductors                           0.010525
+  16    cat_Health_Care                              0.009989
+  17    is_sf_bay_area                               0.009956
+  18    cat_Web_Hosting                              0.007370
+  19    cat_Advertising                              0.005786
+  20    country_CAN                                  0.005263
+  Plot saved: D:\Web Development\startup validator\outputs\model_evaluation\importance_gradient_boosting.png
+
+  Extra Trees — Top 20 features by impurity importance:
+  Rank  Feature                                    Importance
+  ----- ---------------------------------------- ------------
+  1     country_Unknown                              0.215173
+  2     country_USA                                  0.164319
+  3     cat_Unknown                                  0.149801
+  4     cat_Biotechnology                            0.055769
+  5     country_RUS                                  0.046355
+  6     cat_Enterprise_Software                      0.027168
+  7     is_sf_bay_area                               0.027120
+  8     cat_Software                                 0.025911
+  9     is_california                                0.024275
+  10    country_other                                0.019691
+  11    cat_Services                                 0.018381
+  12    cat_Curated_Web                              0.017392
+  13    cat_Social_Media                             0.015959
+  14    cat_Analytics                                0.014268
+  15    cat_Health_Care                              0.012341
+  16    cat_Security                                 0.010995
+  17    cat_Semiconductors                           0.009927
+  18    country_CAN                                  0.009881
+  19    category_other                               0.008501
+  20    cat_Web_Hosting                              0.007988
+  Plot saved: D:\Web Development\startup validator\outputs\model_evaluation\importance_extra_trees.png
+
+  Feature importance data saved: D:\Web Development\startup validator\outputs\model_evaluation\feature_importance.json
+
+======================================================================
+  STEP 12 — FINAL VALIDATION
+======================================================================
+  Predictions generated: 2667 rows, prob range [0.0542, 0.8918]
+  Reloaded model predictions match original: True
+  Feature count : 65 == 65  OK
+  Feature order matches feature_names.json  OK
+  NaN in test features: 0  OK
+  'target' absent from feature matrix  OK
+  All 9 forbidden columns absent  OK
+
+  All validation checks passed.
+
+======================================================================
+  STEP 13 — FINAL SUMMARY
+======================================================================
+
+  Prediction point : Day 0 (pre-funding idea stage)
+  Baseline accuracy: 0.5321  (53.21%)
+  Model selection  : CV ROC-AUC (training data only)
+
+  Model                        CV AUC     CV F1  Test Acc   Test F1  Test AUC   Selected
+  ------------------------- --------- --------- --------- --------- --------- ----------
+  Logistic Regression          0.7364    0.7141    0.6944    0.7297    0.7558           
+  Decision Tree                0.7188    0.7135    0.6835    0.7283    0.7410           
+  Random Forest                0.7364    0.7214    0.6937    0.7382    0.7599 <-- SELECTED
+  Gradient Boosting            0.7357    0.7293    0.6963    0.7446    0.7587           
+  Extra Trees                  0.7353    0.7252    0.7030    0.7484    0.7601           
+
+  Selected model      : Random Forest
+  Selection basis     : highest CV AUC = 0.7364 (training data only)
+  Test Accuracy       : 0.6937
+  Test Precision      : 0.6769
+  Test Recall         : 0.8118
+  Test F1             : 0.7382
+  Test ROC-AUC        : 0.7599
+  Beats baseline      : True
+
+  Phase 3 complete. DO NOT start Phase 4 / application integration
+  until results have been reviewed and approved.
